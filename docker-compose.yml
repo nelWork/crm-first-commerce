@@ -1,0 +1,49 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: php81commerce
+    volumes:
+      - .:/var/www          # ✅ корень проекта -> /var/www
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    environment:
+      XDEBUG_MODE: off
+      XDEBUG_CONFIG: client_host=host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  db:
+    platform: linux/amd64
+    image: mysql:8.0
+    container_name: mysql8commerce
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: pegas
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    platform: linux/amd64
+    image: phpmyadmin/phpmyadmin
+    container_name: pmacommerce
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: testuser
+      PMA_PASSWORD: testpass
+      UPLOAD_LIMIT: 512M
+    ports:
+      - "8081:80"
+
+volumes:
+  db_data:
