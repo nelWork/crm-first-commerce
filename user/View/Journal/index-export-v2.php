@@ -13,15 +13,23 @@
 $sumTo = 0;
 $sumFrom = 0;
 
+$sumAdditionalExpense = 0;
+
 foreach ($listPayment['arrayTo'] as $item){
     $sumTo += $item['Сумма'];
 }
 
 foreach ($listPayment['arrayFrom'] as $item){
-    $sumFrom += $item['Сумма'];
+    if(!isset($item['ДопРасход'])){
+        $sumFrom += $item['Сумма'];
+    }
+    else{
+        $sumAdditionalExpense += $item['Сумма'];
+    }
+    
 }
 
-//dd($listPayment);
+// dd($listPayment);
 
 $controller->view('Components/head');
 ?>
@@ -328,13 +336,19 @@ $controller->view('Components/head');
     }
 </style>
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-4"><?php echo $titlePage; ?>
-        <button class="btn btn-warning" id="btn-open-files" data-bs-toggle="modal" data-bs-target="#exampleModal">Открыть список загруженных файлов</button></h1>
+    <h1 class="text-center mb-4"><?php echo $titlePage; ?> <br>
+        <button class="btn btn-warning" id="btn-open-files" data-bs-toggle="modal" data-bs-target="#exampleModal">Открыть список загруженных файлов</button>
+    </h1>
 
     <ul class="nav nav-pills justify-content-center w-100 mb-5">
         <li class="nav-item">
             <a class="nav-link js-tab-task js-tab-customer active" aria-current="page" href="#" data-num-tab="1">
                 Дебет
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-tab-task js-tab-customer"  href="#" data-num-tab="3">
+                Доп расходы
             </a>
         </li>
         <li class="nav-item">
@@ -417,6 +431,12 @@ $controller->view('Components/head');
                             //var_dump($payment);
                             continue;
                         }
+
+                        if(isset($payment['ДопРасход'])){
+                            continue;
+                        }
+
+                        // dump($payment);
                         $application = $payment['applicationData'];
                         $TYPE_APPLICATION = $application['TYPE'];
 
@@ -437,9 +457,7 @@ $controller->view('Components/head');
                                 <!-- Номер заявки, перевозчик -->
                                 <a href="/<?php if($TYPE_APPLICATION == 1) echo 'application?id='; else echo 'prr/prr_application?id='; echo $application['id']; ?>"
                                    target="_blank" style="color: black;text-decoration: unset;">
-                                    <?php if($application['application_number'] < 500 AND $TYPE_APPLICATION == 1)
-                                        echo $application['application_number'].'-Т';
-                                    else
+                                    <?php
                                         echo $application['application_number']; ?>
                                 </a>
                                 <?php
@@ -474,7 +492,17 @@ $controller->view('Components/head');
                             ?>
                         </span>
                                 <div style="font-size: 12px; color: #0d6efd" class="section-application">
-                                    <?php echo $customers[$application['id_customer'] - 1]['name']; ?>
+                                    <?php
+                                    switch ($application['customer_id_Carrier']):
+                                        case 1:
+                                            echo '(ООО Либеро Логистика)';
+                                            break;
+                                        case 4:
+                                            echo '(ООО Библеон)';
+                                            break;
+                                    endswitch;
+                                    ?>
+
                                 </div>
                             </td>
                             <td class="table-col-5">
@@ -610,8 +638,296 @@ $controller->view('Components/head');
                                         $payment['НазначениеПлатежа']
                                 ); ?>
                             </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
+    </div>
 
+    <div id="tab-3" class="table-tab">
+
+        <div class="table-container">
+            <div class="table-container">
+                <table class="table display table-striped table-bordered" id="table">
+                    <thead >
+                    <tr style="border: 1px solid black">
+                        <th class="table-col-2">
+                            № заявки, <br> перевозчик
+                            (№ заявки, клиент)
+                        </th>
+                        <th class="table-col-4">
+                            Дата заявки
+                        </th>
+                        <th class="table-col-5">Дата погрузки</th>
+                        <th class="table-col-6">Дата разгрузки</th>
+                        <th class="table-col-6-1">
+                            Акт. дата разгрузки
+                        </th>
+
+                        <th class="table-col-16">
+                            Название перевозчика
+                        </th>
+                        <th class="table-col-19">
+                            Общая сумма
+                        </th>
+                        <th class="table-col-20">Сумма без НДС</th>
+                        <th class="table-col-21">НДС</th>
+                        <th class="table-col-22">
+                            Факт. сумма оплаты
+                        </th>
+
+                        <th>
+                            Основание операции (назначение платежа)
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody style="position: relative; padding-top: 40px;">
+
+                    <tr style="border: 1px solid black; background-color: darkorange">
+                        <td class="table-col-2">
+                        </td>
+                        <td class="table-col-4">
+
+                        </td>
+                        <td class="table-col-5"></td>
+                        <td class="table-col-6"></td>
+                        <td class="table-col-6-1">
+
+                        </td>
+                        <td class="table-col-16">
+
+                        </td>
+                        <td class="table-col-19">
+
+                        </td>
+                        <td class="table-col-20"></td>
+                        <td class="table-col-21"></td>
+                        <td class="table-col-22">
+
+                        </td>
+
+                        <th>
+                            <?php echo number_format($sumAdditionalExpense, 2, '.', ' '); ?> ₽
+                        </th>
+                    </tr>
+
+                    <?php foreach($listPayment['arrayFrom'] as $payment):
+                        //dd($payment);
+                        if(!isset($payment['applicationData'])){
+                            //var_dump($payment);
+                            continue;
+                        }
+
+                        if(!isset($payment['ДопРасход'])){
+                            continue;
+                        }
+
+                        // dump($payment);
+                        $application = $payment['applicationData'];
+                        $TYPE_APPLICATION = $application['TYPE'];
+
+                        $carrierPaymentEvent = false;
+                        $clientPaymentEvent = false;
+
+                        foreach ($application['events_application'] as $event) {
+                            if($event['event'] == 'client_payment_status')
+                                $clientPaymentEvent = ['id' => $event['id'] ,'status' => $event['status']];
+                            if($event['event'] == 'carrier_payment_status')
+                                $carrierPaymentEvent = ['id' => $event['id'] ,'status' => $event['status']];
+                        }
+                    ?>
+                        <tr style="border: 1px solid black;" class="js-tr-application tr-application
+                        <?php if($application['fullPaymentCarrier']) echo 'bg-inactive'; ?>
+                        <?php if($application['id'] <= 844) echo 'application-closed-manually'; ?>" >
+                            <td class="table-col-2 table-col-application-number-carrier">
+                                <!-- Номер заявки, перевозчик -->
+                                <a href="/<?php if($TYPE_APPLICATION == 1) echo 'application?id='; else echo 'prr/prr_application?id='; echo $application['id']; ?>"
+                                   target="_blank" style="color: black;text-decoration: unset;">
+                                    <?php
+                                        echo $application['application_number']; ?>
+                                </a>
+                                <?php
+                                if($application['application_number_Client'])
+                                    echo '(' .$application['application_number_Client'] .')';
+                                else
+                                    echo '(—)';
+                                ?>
+                            </td>
+                            <td class="table-col-4">
+                                <!-- Дата заявки -->
+                                <?php echo date('d.m.Y', strtotime($application['date'])); ?>
+                                <span style="font-size: 12px; color: #0d6efd" class="section-application">
+                            <?php
+                            switch ($application['application_section_journal']):
+                                case 1:
+                                    echo '(Актуальные)';
+                                    break;
+                                case 2:
+                                    echo '(Завершенные)';
+                                    break;
+                                case 3:
+                                    echo '(Закрытые под расчет)';
+                                    break;
+                                case 4:
+                                    echo '(Срывы)';
+                                    break;
+                                case 5:
+                                    echo '(Отмененные)';
+                                    break;
+                            endswitch;
+                            ?>
+                        </span>
+                                <div style="font-size: 12px; color: #0d6efd" class="section-application">
+                                    <?php
+                                    switch ($application['id_customer']):
+                                        case 1:
+                                            echo '(ООО Либеро Логистика)';
+                                            break;
+                                        case 4:
+                                            echo '(ООО Библеон)';
+                                            break;
+                                    endswitch;
+                                    ?>
+
+                                </div>
+                            </td>
+                            <td class="table-col-5">
+                                <!-- Дата погрузки -->
+                                <?php foreach ($application['transportation_list'] as $item): if($item['direction']): ?>
+                                    <div><?php echo $item['date']; ?> </div>
+                                <?php endif; endforeach; ?>
+                            </td>
+                            <td class="table-col-6">
+                                <!-- Дата разгрузки -->
+                                <?php foreach ($application['transportation_list'] as $item): if(!$item['direction']): ?>
+                                    <div><?php echo $item['date']; ?> </div>
+                                <?php endif; endforeach; ?>
+                            </td>
+                            <td class="table-col-6-1">
+                                <!-- Актуальная дата разгрузки -->
+                                <?php if($application['application_date_actual_unloading'])
+                                    echo date('d.m.Y', strtotime($application['application_date_actual_unloading'])); ?>
+                            </td>
+
+                            <td class="table-col-16 col-carrier <?php if($carrierPaymentEvent) echo 'event-payment-' .$carrierPaymentEvent['status']; ?> "
+                                <?php if($carrierPaymentEvent) echo 'data-id-event="'.$carrierPaymentEvent['id'] .'"'; ?>
+                                data-type="carrier">
+                                <!-- Название перевозчика -->
+                                <?php echo $application['carrier_data']['name']; ?>
+                                <div><span class="inn text-secondary"><?php echo $application['carrier_data']['inn']; ?></span></div>
+                            </td>
+                            <td class="table-col-19 col-carrier <?php if($carrierPaymentEvent) echo 'event-payment-' .$carrierPaymentEvent['status']; ?> "
+                                <?php if($carrierPaymentEvent) echo 'data-id-event="'.$carrierPaymentEvent['id'] .'"'; ?>
+                                data-type="carrier" data-cost="<?php echo $application['transportation_cost_Carrier']; ?>">
+                                <!-- Общая сумма  -->
+                                <div><?php echo number_format($application['transportation_cost_Carrier'],0,'.',' '); ?> ₽</div>
+                                <span class="text-secondary"><?php echo $application['taxation_type_Carrier']; ?></span>
+                            </td>
+                            <td class="table-col-20 col-carrier <?php if($carrierPaymentEvent) echo 'event-payment-' .$carrierPaymentEvent['status']; ?> "
+                                <?php if($carrierPaymentEvent) echo 'data-id-event="'.$carrierPaymentEvent['id'] .'"'; ?>
+                                data-type="carrier" data-cost="<?php if($application['taxation_type_Carrier'] == 'С НДС') echo $application['transportation_cost_Carrier'] / 1.2; else echo $application['transportation_cost_Carrier']; ?>">
+                                <!-- Сумма без НДС -->
+                                <?php
+                                if($application['taxation_type_Carrier'] == 'С НДС')
+                                    echo number_format($application['transportation_cost_Carrier'] / 1.2,0,'.',' ');
+                                else
+                                    echo number_format($application['transportation_cost_Carrier'],0,'.',' ');
+                                ?> ₽
+                            </td>
+                            <td class="table-col-21 col-carrier <?php if($carrierPaymentEvent) echo 'event-payment-' .$carrierPaymentEvent['status']; ?> "
+                                <?php if($carrierPaymentEvent) echo 'data-id-event="'.$carrierPaymentEvent['id'] .'"'; ?>
+                                data-type="carrier" data-cost="<?php if($application['taxation_type_Carrier'] == 'С НДС') echo $application['transportation_cost_Carrier'] / 6; else echo 0; ?>">
+                                <!-- НДС -->
+                                <?php
+                                if($application['taxation_type_Carrier'] == 'С НДС')
+                                    echo number_format($application['transportation_cost_Carrier'] / 6,0,'.',' ');
+                                else
+                                    echo number_format(0,0,'.',' ');
+                                ?> ₽
+                            </td>
+
+                            <td class="table-col-22 col-carrier <?php if($carrierPaymentEvent) echo 'event-payment-' .$carrierPaymentEvent['status']; ?> "
+                                <?php if($carrierPaymentEvent) echo 'data-id-event="'.$carrierPaymentEvent['id'] .'"'; ?>
+                                data-type="carrier" data-cost="<?php echo $application['actual_payment_Carrier']; ?>">
+                                <!-- Фактическая сумма оплаты -->
+                                <input id="actual-payment-carrier-additional-payment-<?php echo $application['id']; ?>" data-name-span="span-actual-payment-carrier"
+                                        <?php if($TYPE_APPLICATION == 2): ?> data-type="prr" <?php endif; ?>
+                                       data-name-info="actual_payment_<?php if($TYPE_APPLICATION == 1 ) echo 'Carrier'; else echo 'Prr';?>"
+                                       data-id-application="<?php echo $application['id'] ?>"  data-date="<?php echo $payment['Дата']; ?>"
+                                       class="d-none form-control textarea-change-application-info-additional-payment" value="<?php echo (float)$payment['Сумма']; ?>">
+                                <div  data-bs-toggle="collapse" class="span-actual-payment-carrier" id="span-actual-payment-carrier-<?php echo $application['id']; ?>" href="#collapseHistoryPaymentCarrier-<?php echo $application['id']; ?>"
+                                      role="button" aria-expanded="false" aria-controls="collapseHistoryPaymentCarrier">
+                                    <?php echo number_format(
+                                        $application['actual_payment_Carrier'],
+                                        0,
+                                        ',',
+                                        ' '
+                                    ); ?> ₽
+                                    <div class="">
+                                        <?php if($application['full_payment_date_Carrier']): ?>
+                                            (<span class="span-date-payment">
+                                        <?php echo date('d.m.Y', strtotime($application['full_payment_date_Carrier'])); ?>
+                                    </span>
+                                            <?php if($accessChangePayment): ?><i class="bi bi-pencil-square js-change-payment-date"></i> <?php endif; ?>)
+                                            <?php if($accessChangePayment): ?>
+                                                <input type="date" class="form-control input-change-date d-none"
+                                                       data-side="<?php if($TYPE_APPLICATION == 1) echo 'Carrier'; else echo 'Prr'; ?>"
+                                                       <?php if($TYPE_APPLICATION == 2): ?> data-type="prr" <?php endif; ?>
+                                                       data-id-app="<?php echo $application['id']; ?>"
+                                                       value="<?php echo date('d.m.Y', strtotime($application['full_payment_date_Carrier'])); ?>">
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if(count($application['history_payment_Carrier'])): ?>
+                                        <i class="bi bi-caret-down-fill text-dark"></i>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="collapse" id="collapseHistoryPaymentCarrier-<?php echo $application['id']; ?>">
+                                    <?php foreach ($application['history_payment_Carrier'] as $history): ?>
+                                        <div class="expenses small">
+                                            <?php echo number_format($history['quantity'],0, ',',' ') ."₽ ("
+                                                . date('d.m.Y', strtotime($history['date'])) .')'; ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php if(! $application['fullPaymentCarrier']): ?>
+                                    <div class="js-accept-payment-additional-payment" data-app-id="<?php echo $application['id']; ?>"
+                                         data-side="<?php if($TYPE_APPLICATION == 1) echo 'Carrier'; else echo 'Prr'; ?>"
+                                        <?php if($TYPE_APPLICATION == 2): ?> data-type="prr" <?php endif; ?>
+                                         data-num-doc="<?php echo $payment['Номер']; ?>"
+                                         data-sum="<?php echo $payment['Сумма']; ?>" data-date="<?php echo $payment['Дата']; ?>"
+                                         style="background-color: <?php if($application['MARKER']) echo 'rgb(63, 14, 204)'; else echo 'green'; ?>; color: white; cursor: pointer; font-weight: 600">
+                                        + <?php echo number_format($payment['Сумма'],2,'.',' '); ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if($application['MARKER'] AND ! $application['fullPaymentCarrier']): ?>
+                                    <div style="font-weight: 800">
+                                        <span class="text-danger">*</span>
+                                        <?php echo $application['MARKER-comment']; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+
+                            <td style="max-width: 250px">
+                                <h5 class="text-center">Заявка <span class="number-app">№ <?php echo $payment['Заявка']; ?> </span></h5>
+                                <h5 class="text-center">Сумма - <?php echo number_format(
+                                        $payment['Сумма'],
+                                        2,
+                                        '.',
+                                        ' '
+                                    ); ?>₽</h5>
+
+                                <?php echo str_replace(
+                                        $payment['Заявка'],
+                                    '<span class="number-app">' . $payment['Заявка'] .'</span>',
+                                        $payment['НазначениеПлатежа']
+                                ); ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -739,9 +1055,7 @@ $controller->view('Components/head');
                     <td class="table-col-2 table-col-application-number-carrier">
                         <!-- Номер заявки, перевозчик -->
                         <a href="/application?id=<?php echo $application['id']; ?>" target="_blank" style="color: black;text-decoration: unset;">
-                            <?php if($application['application_number'] < 500)
-                                echo $application['application_number'].'-Т';
-                            else echo $application['application_number'];?>
+                            <?php echo $application['application_number'];?>
                         </a>
                         <?php
                             if($application['application_number_Client'])
@@ -775,8 +1089,16 @@ $controller->view('Components/head');
                             ?>
                         </span>
                         <div style="font-size: 12px; color: #0d6efd" class="section-application">
-                            <?php echo $customers[$application['id_customer'] - 1]['name']; ?>
-
+                            <?php
+                            switch ($application['customer_id_Client']):
+                                case 1:
+                                    echo '(ООО Либеро Логистика)';
+                                    break;
+                                case 4:
+                                    echo '(ООО Библеон)';
+                                    break;
+                            endswitch;
+                            ?>
 
                         </div>
                     </td>
@@ -1136,7 +1458,14 @@ $controller->view('Components/head');
 </script>
 
 <script>
-
+    $('.js-accept-payment-additional-payment').click(function(){
+            let idApp = $(this).data('app-id');
+            let numDoc = $(this).data('num-doc');
+            $('#actual-payment-carrier-additional-payment-' + idApp).trigger('change');
+            $('.js-tr-application').has(this).addClass('bg-inactive');
+            $(this).addClass('d-none');
+    
+    });
     $('.js-accept-payment-client').click(function () {
         if(confirm('Подтвердите своё действие')){
             let idApp = $(this).data('app-id');
@@ -1357,6 +1686,60 @@ $controller->view('Components/head');
             }
         })
 
+    });
+
+    $('body').on('change','.textarea-change-application-info-additional-payment',function () {
+        let id = $(this).data('id-application');
+        
+        let info = $(this).val();
+        let date = $(this).data('date');
+
+        console.log({id: id, info: info, data: date})
+
+        let typeApp = $(this).data('type');
+
+        let nameSpan = $(this).data('name-span');
+
+        let $this = $(this);
+        $(this).val('');
+
+        $.ajax({
+            method:'POST',
+            url: '/journal/ajax/change-application-additional-expenses',
+            data: {id: id, info: info, date: date},
+            success: function (response) {
+                console.log(response)
+
+                response = JSON.parse(response);
+
+                if(response['status']){
+                    $this.addClass('d-none');
+                    $('#' + nameSpan + '-' + id).text(info);
+                    $('#' + nameSpan + '-' + id).removeClass('d-none');
+
+                    if(nameSpan === 'span-account-number-client'){
+                        $('#span-upd-number-client-'+id).text(info)
+                    }
+
+                    if(response['event']){
+                        if(nameInfo === 'actual_payment_Client'){
+
+                            $('tr').has($this).find('.col-client').addClass('event-payment-0');
+                        }
+                        if(nameInfo === 'actual_payment_Carrier'){
+
+                            $('tr').has($this).find('.col-carrier').addClass('event-payment-0');
+                        }
+                    }
+
+                    if(response['cost']){
+                        $('#' + nameSpan + '-' + id).text(formatter.format(response['cost']) + ' ₽');
+                    }
+
+                }
+            }
+        })
+
     })
 
     $('.js-change-application-info').click(function () {
@@ -1374,6 +1757,7 @@ $controller->view('Components/head');
 
     });
     $('#tab-2').hide();
+    $('#tab-3').hide();
     $('.js-tab-customer').click(function (){
         $('.js-tab-customer').removeClass('active');
         $(this).addClass('active');

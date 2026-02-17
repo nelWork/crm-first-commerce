@@ -440,6 +440,12 @@ $controller->view('Components/head');
                     Показать заявки только из реестра на оплату
                 </label>
             </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="show-prr-application">
+                <label class="form-check-label" for="show-prr-application">
+                    Показать заявки ПРР
+                </label>
+            </div>
         </div>
 
         <div class="table-container">
@@ -887,18 +893,55 @@ $controller->view('Components/head');
                                     Оплата сегодня <i class="bi bi-caret-down-fill"></i>
                                 </div>
                                 <div class="filter-body">
-                                    <?php foreach ($uniqueData['last_register_payment_comment'] as $cost): if($cost == '') $cost = 0; ?>
+                                    <div class="form-check" style="display: block!important;">
+                                        <input class="form-check-input js-filter-header-table" data-name-col="last-register-payment-comment"
+                                            data-type-filter="id" type="checkbox" name="filter-header-table-2"
+                                            value="*" id="flexCheckDefault-last-register-payment-comment">
+                                        <label class="form-check-label" for="flexCheckDefault-last-register-payment-comment">
+                                            Все
+                                        </label>
+                                    </div>
+                                    <?php foreach ($uniqueData['last_register_payment_comment'] as $comment): ?>
                                         <div class="form-check">
                                             <input class="form-check-input js-filter-header-table" data-name-col="last-register-payment-comment"
                                                 data-type-filter="id" type="checkbox" name="filter-header-table-2"
-                                                value="<?php echo $cost; ?>" id="flexCheckDefault-last-register-payment-comment-<?php echo $cost; ?>">
-                                            <label class="form-check-label" for="flexCheckDefault-last-register-payment-comment-<?php echo $cost; ?>">
-                                                <?php echo number_format($cost, 0, '.', ' '); ?> ₽
+                                                value="<?php echo $comment; ?>" id="flexCheckDefault-last-register-payment-comment-<?php echo $comment; ?>">
+                                            <label class="form-check-label" for="flexCheckDefault-last-register-payment-comment-<?php echo $comment; ?>">
+                                                <?php echo $comment; ?>
                                             </label>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
+                        </th>
+                        <th class="table-col-31-1">
+                            Комментарий
+                            <!-- <div class="header-table-filter">
+                                
+                                <div class="filter-head">
+                                    Комментарий <i class="bi bi-caret-down-fill"></i>
+                                </div>
+                                <div class="filter-body">
+                                    <div class="form-check" style="display: block!important;">
+                                        <input class="form-check-input js-filter-header-table" data-name-col="last-register-payment-comment"
+                                            data-type-filter="id" type="checkbox" name="filter-header-table-2"
+                                            value="*" id="flexCheckDefault-last-register-payment-comment">
+                                        <label class="form-check-label" for="flexCheckDefault-last-register-payment-comment">
+                                            Все
+                                        </label>
+                                    </div>
+                                    <?php foreach ($uniqueData['last_register_payment_comment'] as $comment): ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input js-filter-header-table" data-name-col="last-register-payment-comment"
+                                                data-type-filter="id" type="checkbox" name="filter-header-table-2"
+                                                value="<?php echo $comment; ?>" id="flexCheckDefault-last-register-payment-comment-<?php echo $comment; ?>">
+                                            <label class="form-check-label" for="flexCheckDefault-last-register-payment-comment-<?php echo $comment; ?>">
+                                                <?php echo $comment; ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div> -->
                         </th>
 
 
@@ -1041,11 +1084,16 @@ $controller->view('Components/head');
                         <td class="table-col-31">
                             <!-- Остаток оплаты -->
                         </td>
+                        
                         <td class="table-col-100">
                         </td>
                         <td class="table-col-100">
                         </td>
+                        
                         <td class="table-col-111">
+                        </td>
+                        <td class="table-col-31-1">
+                            <!-- Комментарий -->
                         </td>
                         <td class="table-col-23">4</td>
                         <td class="table-col-24">5</td>
@@ -1053,6 +1101,7 @@ $controller->view('Components/head');
                         <td class="table-col-26">7</td>
                         <td class="table-col-27"></td>
                         <td class="table-col-28">8</td>
+                        
                     </tr>
                     <?php foreach ($listApplication as $application): ?>
                         
@@ -1089,6 +1138,8 @@ $controller->view('Components/head');
                         ?>
                         <tr class="js-tr-application tr-application"
                             data-in-register="<?php echo $application['in_register']; ?>"
+                            data-app-id=<?php echo $application['id']; ?>
+                            data-is-prr="<?php if($application['type-application'] == 'prr') echo 1; ?>"
                             data-application-walrus="<?php echo $application['application_walrus']; ?>"
                             data-additional-expenses-gruz="<?php foreach ($application['additional_expenses'] as $expense)
                                                                 if ($expense['type_expenses'] == 'Грузчики') {
@@ -1471,8 +1522,18 @@ $controller->view('Components/head');
                             <td class="table-col-31" data-cost="<?php echo $application['balance_payment_Carrier']; ?>">
                                 <?php echo number_format($application['balance_payment_Carrier'], 0, '', ' '); ?> ₽
                             </td>
+                            
                             <td class="table-col-100 col-client" data-cost="<?php echo $application['balance_payment_Carrier']; ?>">
                                 <?php echo $application['terms_payment_Carrier']; ?>
+                            </td>
+                            <td class="table-col-31-1">
+                                <?php if($application['type-application'] != 'prr'): ?>
+                                <?php  foreach ($application['list_comment'] as $comment): ?>
+                                    <div class="">
+                                        - <?php echo $comment['comment']; ?> (<?php echo $comment['user'] .' ' .$comment['datetime']; ?>)
+                                    </div>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </td>
                             <td class="table-col-100 col-client" data-cost="<?php echo $application['balance_payment_Carrier']; ?>">
                                 <?php if($application['id'] == 485) $application['date_payment_Carrier'] = '2025-12-30'; ?>
@@ -1807,7 +1868,28 @@ $controller->view('Components/head');
 
     </main>
 
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить комментарий</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="form-add-comment-register-payment">
+                        <input type="hidden" value="0" name="id" id="input-id-application" data-type="application">
+                        <div class="mb-4">
+                            <label for="" class="mb-2">Введите ваш комментарий</label>
+                            <input type="text" class="form-control" name="comment">
+                        </div>
+                        <button class="btn btn-success">
+                            Добавить комментарий
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <ul id="custom-menu-tr-application" class="custom-menu" style="display:none;">
         <?php if ($accessChangePayment): ?>
@@ -1840,12 +1922,38 @@ $controller->view('Components/head');
                 </div>
             </li>
         <?php endif; ?>
+        <li class="js-change-application-info single" id="add-comment" data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить комментарий</li>
+
         <!--    <li class="js-change-application-info single" data-name="account-number-carrier">Ввести номер счета перевозчика</li>-->
         <!--    <li class="js-change-application-info single" data-name="upd-number-carrier">Ввести номер УПД перевозчика</li>-->
     </ul>
 
 
     <script>
+        $('#form-add-comment-register-payment').submit(function (e) {
+            e.preventDefault();
+            $('.btn').attr('disabled', true);
+
+            let form = $(this).serializeArray();
+
+            $.ajax({
+                method: 'POST',
+                url: '/register-payment/ajax/add-comment-application',
+                data: form,
+                success: function (response) {
+                    // location.reload();
+                    console.log(response);
+                    $('.btn').attr('disabled', true);
+
+                }
+            });
+        });
+        $('#add-comment').click(function () {
+            let id = $('.tr-application.active').data('app-id');
+            
+
+            $('#input-id-application').val(id);
+        });
         $('.comment-field-history').change(function () {
             let id = $(this).data('id');
             let comment = $(this).val();
@@ -2130,6 +2238,12 @@ $controller->view('Components/head');
         $('#show-register-payment').on('change', function() {
             filterHeaderTable(); // просто заново применяем фильтры
         });
+        $('#show-prr-application').on('change', function(){
+            filterHeaderTable(); // просто заново применяем фильтры
+
+        });
+        $('#show-prr-application').trigger('change');
+
 
         function filterHeaderTable(changeSection = 0) {
             let arrayNameCol = [
@@ -2184,6 +2298,15 @@ $controller->view('Components/head');
             if ($('#show-register-payment').is(':checked')) {
                 normal = normal.filter(function () {
                     return $(this).data('in-register') == 1;
+                });
+            }
+
+            if ($('#show-prr-application').is(':checked')) {
+                
+            }
+            else{
+                normal = normal.filter(function () {
+                    return $(this).data('is-prr') != 1;
                 });
             }
 
@@ -2588,8 +2711,12 @@ $controller->view('Components/head');
     let payTodaySum = 0;
     $('.pay-today').each(function () {
         let text = $(this).text();
-        if (text !== '') {
-            payTodaySum += parseInt(text.replace(/[^0-9]/g, ''));
+
+        // ищем первое число в тексте
+        let match = text.match(/\d+/);
+
+        if (match) {
+            payTodaySum += parseInt(match[0], 10);
         }
     });
 

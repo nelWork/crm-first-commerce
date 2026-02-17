@@ -36,6 +36,9 @@ $uniqueCarrierName = $controller->pluckUniqueSorted($listHistoryPaymentCarrier,'
 
 //dd($uniqueClientAccountNumber);
 $controller->view('Components/head');
+
+
+// dd($listHistoryPaymentCarrier);
 ?>
 
 <body>
@@ -175,18 +178,28 @@ $controller->view('Components/head');
                             <i class="bi bi-funnel-fill"></i>
                         </span>
                         <div class="menu-filter">
-                            <?php foreach($customers as $item): ?>
                                 <div class="form-check">
                                     <input class="form-check-input js-filter-checkbox" type="checkbox" data-type="0"
                                            data-name-col="customer"
-                                           value="<?php echo $item['id']; ?>"
-                                           id="checkbox-customer-<?php echo $item['id']; ?>">
+                                           value="1"
+                                           id="checkbox-customer-1">
                                     <label class="form-check-label"
-                                           for="checkbox-customer-<?php echo $item['id']; ?>">
-                                        <?php echo $item['name']; ?>
+                                           for="checkbox-customer-1">
+                                        ООО Либеро Логистика
                                     </label>
                                 </div>
-                            <?php endforeach; ?>
+                                <div class="form-check">
+                                    <input class="form-check-input js-filter-checkbox" type="checkbox" data-type="0"
+                                           data-name-col="customer"
+                                           value="4"
+                                           id="checkbox-customer-1">
+                                    <label class="form-check-label"
+                                           for="checkbox-customer-1">
+                                        ООО Библеон
+                                    </label>
+                                </div>
+                            
+                            </div>
                         </div>
                     </th>
                     <th>
@@ -258,6 +271,9 @@ $controller->view('Components/head');
                         </div>
 
                     </th>
+                    <th>
+                        Вид налогообложения
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -268,6 +284,8 @@ $controller->view('Components/head');
                     <td></td>
                     <td></td>
                     <td id="debit-sum"><?php echo number_format($sumClient,2,',',' '); ?></td>
+                    <td></td>
+
                 </tr>
                 <?php foreach ($listHistoryPaymentClient as $item): ?>
                     <tr class="js-tr-application" data-number="<?php echo $item['application_data']['application_number']; ?>"
@@ -284,6 +302,7 @@ $controller->view('Components/head');
                         <td><?php echo $item['application_data']['account_number_Client']; ?></td>
                         <td><?php echo date('d.m.Y', strtotime($item['date'])); ?></td>
                         <td><?php echo number_format($item['quantity'], 2, ',', ' '); ?></td>
+                        <td><?php echo $item['application_data']['taxation_type_Client']; ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -328,18 +347,27 @@ $controller->view('Components/head');
                             <i class="bi bi-funnel-fill"></i>
                         </span>
                         <div class="menu-filter">
-                            <?php foreach($customers as $item): ?>
                             <div class="form-check">
                                 <input class="form-check-input js-filter-checkbox" type="checkbox" data-type="0"
                                        data-name-col="customer-carrier"
-                                       value="<?php echo $item['id']; ?>"
-                                       id="checkbox-customer-carrier-<?php echo $item['id']; ?>">
+                                       value="1"
+                                       id="checkbox-customer-carrier-1">
                                 <label class="form-check-label"
-                                       for="checkbox-customer-carrier-<?php echo $item['id']; ?>">
-                                    <?php echo $item['name']; ?>
+                                       for="checkbox-customer-carrier-1">
+                                    ООО Либеро Логистика
                                 </label>
                             </div>
-                            <?php endforeach; ?>
+                            <div class="form-check">
+                                <input class="form-check-input js-filter-checkbox" type="checkbox" data-type="0"
+                                       data-name-col="customer-carrier"
+                                       value="4"
+                                       id="checkbox-customer-carrier-4">
+                                <label class="form-check-label"
+                                       for="checkbox-customer-carrier-4">
+                                    ООО Библеон
+                                </label>
+                            </div>
+                            
                         </div>
                     </th>
                     <th>
@@ -387,6 +415,9 @@ $controller->view('Components/head');
                             <button class="btn btn-outline-danger btn-sm w-100 mt-2 js-reset-filter">Сбросить фильтр</button>
                         </div>
                     </th>
+                    <th>
+                        Вид налогообложения
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -396,6 +427,7 @@ $controller->view('Components/head');
                     <td></td>
                     <td></td>
                     <td id="credit-sum"><?php echo number_format($sumCarrier,2,',',' '); ?></td>
+                    <td></td>
                 </tr>
                 <?php foreach ($listHistoryPaymentCarrier as $item): ?>
                     <tr class="js-tr-application" data-number-carrier="<?php echo $item['application_data']['application_number']; ?>"
@@ -408,6 +440,8 @@ $controller->view('Components/head');
                         <td><?php echo $item['application_data']['carrier']; ?></td>
                         <td><?php echo date('d.m.Y', strtotime($item['date'])); ?></td>
                         <td><?php echo number_format($item['quantity'], 2, ',', ' '); ?></td>
+                        <td><?php echo $item['application_data']['taxation_type_Carrier']; ?></td>
+
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

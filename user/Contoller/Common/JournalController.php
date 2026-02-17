@@ -170,6 +170,33 @@ class JournalController extends Controller
         // dd($listApplication);
         $uniqueData['last_register_payment_comment'] = array_unique(array_column($listApplication, 'last_register_payment_comment'));
         
+        foreach($listApplication as $key => $application){
+            if($application['type-application'] == 'prr')
+                continue;
+
+            $listCommentDB = $this->database->select(
+                'register_payment_application_comment',
+                ['id_application' => $application['id']],
+                ['id' => 'DESC']
+            );
+
+            $listComment = [];
+
+            if($listCommentDB){
+                foreach ($listCommentDB as $comment) {
+                    $tempComment = $comment;
+
+                    $tempUser = $this->database->first('users', ['id' => $comment['id_user']]);
+
+                    $tempComment['user'] = $tempUser['name'] . ' ' . $tempUser['surname'];
+                    $tempComment['datetime'] = date('d.m.Y', strtotime($comment['datetime_comment']));
+
+                    $listComment[] = $tempComment;
+                }
+            }
+
+            $listApplication[$key]['list_comment'] = $listComment;
+        }
 
         $this->extract([
             'controller' => $this,
@@ -411,6 +438,79 @@ class JournalController extends Controller
                 $sumCarrier += $item['quantity'];
 
             }
+        }
+
+        $condition = [
+            'dateField' => [
+                'name' => 'datetime',
+                'start' => date('Y-m-01'),
+                'end' => date('Y-m-28')
+            ]
+        ];
+
+        $period = date('01.m.Y') .' - ' . date('28.m.Y');
+
+        if($this->request->input('period') !== null AND $this->request->input('period') !== '') {
+            $period = $this->request->input('period');
+
+            $date = explode(' - ', $period);
+
+            if(isset($date['1']))
+                $condition['dateField']  = [
+                    'name' => 'datetime',
+                    'start' => date('Y-m-d', strtotime($date[0])),
+                    'end' => date('Y-m-d 23:59:59', strtotime($date[1])),
+                ];
+            else
+                $condition['dateField']  = [
+                    'name' => 'datetime',
+                    'start' => date('Y-m-d', strtotime($date[0])),
+                    'end' => date('Y-m-d 23:59:59', strtotime($date[0])),
+                ];
+        }
+
+        $listHistoryPayment = $this->database->superSelect('payment_history_additional_expenses',
+            $condition,
+            ['id' => 'DESC']
+        );
+
+        foreach ($listHistoryPayment as $item){
+
+            $item['id_application'] = $item['application_id'];
+            $item['date'] = $item['datetime'];
+            $item['quantity'] = $item['sum'];
+
+            $item['application_data'] = $this->database->first(
+                'applications',
+                ['id' => $item['id_application']],
+                [
+                    'application_number',
+                    'customer_id_Carrier',
+                ]
+            );
+
+            if(! $item['application_data']) continue;
+
+            $item['application_data']['TYPE_APPLICATION'] = 3;
+
+            $item['application_data']['customer_Carrier'] = 'ООО Либеро Логистика';
+
+            switch ($item['application_data']['customer_id_Carrier']) {
+                case 4:
+                    $item['application_data']['customer_Carrier'] = 'ООО Библеон';
+                    break;
+            }
+
+            $comment = $this->database->first('additional_expenses',
+                ['id' => $item['additional_expense_id']],
+                ['comment']
+            );
+
+            $item['application_data']['carrier'] = ($item['additional_expenses_name'] ?? '').(($comment['comment'] ?? '') !== '' ? ' ('.$comment['comment'].')' : '');
+            $item['application_data']['taxation_type_Carrier'] = $item['taxation_type'];
+            $listHistoryPaymentCarrier[] = $item;
+            $sumCarrier += $item['quantity'];
+
         }
 
 
@@ -657,6 +757,14 @@ class JournalController extends Controller
                 $condition['dateField'] = ['name' => 'date', 'start' => $date_start, 'end' => $date_end_filter];
             }
             $noProfit = true;
+        }
+
+        if($this->request->input('not-in-salary') == 'Вадим'){
+            $condition = [
+                'id_user' => 19,
+                'cancelled' => 0,
+                'application_section_journal' => [1,2]
+            ];
         }
 
         $listApplication = $model->getListApplication($condition, false);
@@ -1277,7 +1385,13 @@ class JournalController extends Controller
         //     'actual_payment_Carrier !=' => 'transportation_cost_Carrier',
         // ];
 
-
+        if($this->request->input('not-in-salary') == 'Вадим'){
+            $condition = [
+                'id_user' => 19,
+                'cancelled' => 0,
+                'application_section_journal' => [1,2]
+            ];
+        }
 
         if($this->request->input('type') == 'ts'){
             $condition = [];
