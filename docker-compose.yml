@@ -41,7 +41,7 @@ services:
       PMA_HOST: db
       PMA_USER: testuser
       PMA_PASSWORD: testpass
-      UPLOAD_LIMIT: 512M
+      UPLOAD_LIMIT: 256M
     ports:
       - "8081:80"
 
