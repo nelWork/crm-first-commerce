@@ -33,9 +33,9 @@ $controller->view('Components/head');
                                     <a href="/applications-list"
                                        class="nav-link <?php if(! $condition['cancelled'] AND !$rop AND !$condition['overdue']) echo 'active';?>">Основные</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="/prr/list" class="nav-link">ПРР</a>
-                                </li>
+<!--                                <li class="nav-item">-->
+<!--                                    <a href="/prr/list" class="nav-link">ПРР</a>-->
+<!--                                </li>-->
                                 <li class="nav-item d-none">
                                     <a href="/ts/list" class="nav-link">ТС</a>
                                 </li>
@@ -49,15 +49,15 @@ $controller->view('Components/head');
                                     <a href="/applications-list?cancelled=1"
                                        class="nav-link <?php if($condition['cancelled'] AND !$rop) echo 'active';?>">Отмененные</a>
                                 </li>
-                                <li class="nav-item <?php if(!$controller->auth->user()->fullCRM()) echo  'd-none';?>">
-                                    <a href="/applications-list?overdue=1"
-                                       class="nav-link <?php if($condition['overdue'] AND !$rop) echo 'active';?>" >
-                                        Просроченные заявки
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            <?php echo $countOverdue; ?>
-                                        <span class="visually-hidden">unread messages</span>
-                                    </a>
-                                </li>
+<!--                                <li class="nav-item --><?php //if(!$controller->auth->user()->fullCRM()) echo  'd-none';?><!--">-->
+<!--                                    <a href="/applications-list?overdue=1"-->
+<!--                                       class="nav-link --><?php //if($condition['overdue'] AND !$rop) echo 'active';?><!--" >-->
+<!--                                        Просроченные заявки-->
+<!--                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-->
+<!--                                            --><?php //echo $countOverdue; ?>
+<!--                                        <span class="visually-hidden">unread messages</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
 
                             </ul>
 

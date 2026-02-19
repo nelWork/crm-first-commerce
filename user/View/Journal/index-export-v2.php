@@ -337,6 +337,9 @@ $controller->view('Components/head');
 </style>
 <main class="journal container-fluid p-4">
     <h1 class="text-center mb-4"><?php echo $titlePage; ?> <br>
+        <a class="btn btn-warning" href="/journal/control-payment">
+            Контроль выписки
+        </a> <br>
         <button class="btn btn-warning" id="btn-open-files" data-bs-toggle="modal" data-bs-target="#exampleModal">Открыть список загруженных файлов</button>
     </h1>
 

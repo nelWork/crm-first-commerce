@@ -9,7 +9,7 @@
 /** @var array $listCarriers */
 /** @var bool $fullCRMAccess */
 
-//dd($listApplication[0]);
+//dd($listApplication);
 //dd($uniqueData);
 // dd($listPRRApplication);
 
@@ -266,7 +266,11 @@ $controller->view('Components/head');
     }
 </style>
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-5"><?php echo $titlePage; ?></h1>
+    <h1 class="text-center mb-5"><?php echo $titlePage; ?><br>
+        <a class="btn btn-warning" href="/journal-list?no-profit=1">
+            Журнал без прибыли
+        </a>
+    </h1>
 
     <?php //$controller->view('Journal/list-customers'); ?>
     <?php //$controller->view('Journal/list-section'); ?>

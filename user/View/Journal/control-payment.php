@@ -52,7 +52,11 @@ $controller->view('Components/head');
 </style>
 
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-5"><?php echo $titlePage; ?></h1>
+    <h1 class="text-center mb-5"><?php echo $titlePage; ?> <br>
+        <a class="btn btn-warning" href="/journal/parse-txt">
+            Журнал выписка
+        </a>
+    </h1>
 
 
     <ul class="nav nav-pills mb-5 justify-content-center w-100" id="tabMenu" role="tablist">

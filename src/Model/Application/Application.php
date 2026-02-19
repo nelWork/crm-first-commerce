@@ -81,7 +81,7 @@ class Application extends Model
 
     private string $addition = '';
 
-    private string $applicationStatus = 'В работе';
+    private string $applicationStatus = 'На проверке';
     private string $applicationStatusJournal = 'Е.Н.П';
     private string $clientPaymentStatus = 'Ожидается счет';
     private string $carrierPaymentStatus = 'Ожидается счет';
@@ -120,7 +120,7 @@ class Application extends Model
     private float $actualPaymentClient = 0.0;
     private float $actualPaymentCarrier = 0.0;
 
-    private int $applicationSectionJournal = 1;
+    private int $applicationSectionJournal = 0;
 
     private $fullPaymentDateClient = null;
     private $fullPaymentDateCarrier = null;
@@ -1004,7 +1004,7 @@ class Application extends Model
     // обнуление данных
         $newApplication->edit(["id" => 0]);
         $newApplication->edit(["attorney_number" => 0]);
-        $newApplication->edit(["application_section_journal" => 1]);
+        $newApplication->edit(["application_section_journal" => 0]);
         $newApplication->edit(["application_status_journal" => 'Е.Н.П']);
 
         $newApplication->edit([

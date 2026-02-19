@@ -28,6 +28,42 @@ use App\User\Model\RegisterPayment\RegisterPaymentApplicationList;
 class JournalController extends Controller
 {
 
+    public function registerApplicationConsideration(){
+
+        $condition = ['application_section_journal' => 0];
+    // dd($condition);
+
+        $model = new Journal($this->database);
+
+        $listApplication = $model->getListApplication($condition);
+    // dd($listApplication);
+
+        $this->extract([
+            'controller' => $this,
+            'titlePage' => 'Реестр заявок на проверке',
+            'listApplication' => $listApplication,
+            'activeHeaderItem' => 17,
+        ]);
+
+        $this->view('Journal/register-application-consideration');
+    }
+
+    public function ajaxApplicationConsiderationAccepted(){
+        $idApplication = $this->request->input('id');
+
+        $application = new Application(['id' => $idApplication]);
+
+        $application->edit([
+            'application_section_journal' => 1,
+            'application_status' => 'В работе'
+        ]);
+
+        if ($application->save())
+            print json_encode(['status' => true]);
+        else
+            print json_encode(['status' => false]);
+    }
+
     public function registerApplicationPayment() {
         $start = microtime(true);
 
@@ -1987,7 +2023,7 @@ class JournalController extends Controller
 
         $condition['for_sales'] = 1;
 
-        // dd($condition);
+//         dd($condition);
 
         $fullCRMAccess = $user->fullCRM();
 

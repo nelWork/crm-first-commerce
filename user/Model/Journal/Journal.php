@@ -332,7 +332,7 @@ foreach (range('A', 'Z') as $col) {
         $applicationsDatabase = $this->database->superSelect('applications', $conditions,['id' => 'DESC'],-1,['id'],0,$selectionOperation);
 
 
-        // dd($applicationsDatabase);
+//         dd($applicationsDatabase);
         
         if(isset($conditions['application_walrus']) AND $conditions['application_walrus'] == 0){
 //            dd($conditions);
@@ -494,7 +494,6 @@ foreach (range('A', 'Z') as $col) {
             $listApplications[] = $temp;
 
         }
-
 
         return $listApplications;
     }

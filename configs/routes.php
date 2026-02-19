@@ -391,6 +391,8 @@ return [
     Route::get('/register-payment',[RegisterPaymentController::class, 'index'], [AuthMiddleware::class]),
     Route::get('/register-application-payment',[JournalController::class, 'registerApplicationPayment'], [FullCRMMiddleware::class]),
     Route::get('/register-additional-expenses',[RegisterPaymentController::class, 'registerAdditionalExpenses'], [FullCRMMiddleware::class]),
+    Route::get('/register-application-consideration',[JournalController::class, 'registerApplicationConsideration'], [FullCRMMiddleware::class]),
+    Route::post('/register-application-consideration/accepted',[JournalController::class, 'ajaxApplicationConsiderationAccepted'], [FullCRMMiddleware::class]),
 
 
     Route::post('/register-payment/ajax/change-application-comment',[RegisterPaymentController::class, 'ajaxChangeApplicationComment'], [AuthMiddleware::class]),

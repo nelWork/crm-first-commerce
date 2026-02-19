@@ -69,12 +69,13 @@ $controller->view('Components/head');
                                 <li><div class="dropdown-item js-create-prr  bg-warning text-dark mb-2" data-id-app="<?php echo $application->id; ?>">
                                         <i class="bi bi-plus-circle"></i> Создать ПРР
                                     </div></li>
-
+                                <?php if($application->status['application-status'] !== 'На проверке' OR $controller->auth->user()->fullCRM()): ?>
                                 <li>
                                     <a href="/application/edit?id=<?php echo $application->id;?>"
                                        class="dropdown-item bg-primary text-white mb-2">
                                         <i class="bi bi-pencil-square" style="margin-right: 6px;"></i> Редактировать</a>
                                 </li>
+                                <?php endif; ?>
                                 <?php if($controller->auth->user()->fullCRM() OR in_array($controller->auth->user()->id(),[17,31])): ?>
                                 <li>
                                     <div class="dropdown-item js-change-manager bg-secondary text-white"
@@ -92,6 +93,7 @@ $controller->view('Components/head');
 
             <div class="card__content d-flex">
                 <div class="card__content-main d-flex flex-column">
+                    <?php if($application->status['application-status'] !== 'На проверке' OR $controller->auth->user()->fullCRM()): ?>
                     <div class="card__content-main__buttons d-flex">
                         <div class="card__content-select-status">
 
@@ -101,7 +103,6 @@ $controller->view('Components/head');
                                     <div class="btn btn-add-light format-document" id="btn-doc-menu" >
                                         Сформировать документ
                                     </div>
-
                                 <div class="settings-menu" id="setting-menu">
                                     <div class="item-doc-fotmat">
                                         <span class="type-format-doc" data-link="agreement-application-carrier">Договор-заявка с перевозчиком</span>
@@ -170,6 +171,7 @@ $controller->view('Components/head');
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                     <div class="card__content-main-harakter_gruza">
                         <p><?php echo $application->natureCargo; ?></p>
                     </div>

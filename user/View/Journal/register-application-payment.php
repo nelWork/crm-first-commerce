@@ -434,12 +434,12 @@ $controller->view('Components/head');
         </div>
 
         <div class="">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="show-register-payment">
-                <label class="form-check-label" for="show-register-payment">
-                    Показать заявки только из реестра на оплату
-                </label>
-            </div>
+<!--            <div class="form-check">-->
+<!--                <input class="form-check-input" type="checkbox" value="" id="show-register-payment">-->
+<!--                <label class="form-check-label" for="show-register-payment">-->
+<!--                    Показать заявки только из реестра на оплату-->
+<!--                </label>-->
+<!--            </div>-->
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="show-prr-application">
                 <label class="form-check-label" for="show-prr-application">

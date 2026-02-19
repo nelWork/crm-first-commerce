@@ -12,27 +12,27 @@
                 <div class="app-header-menu-item">
                     <a href="/applications-list" class="<?php if($activeHeaderItem == 1) echo 'active'; ?>">
                         Заявки
-                        <?php if($controller->auth->user()->fullCRM()):
-                            $countOverdue = $controller->database->superSelect('applications', [
-                                    'cancelled' => 0,
-                                    'application_section_journal' => [1,2],
-                                    'dateField' => [
-                                        'name' => 'date',
-                                        'start' => '2025-01-01',
-                                        'end' => date('Y-m-d',strtotime('-40 days'))
-                                    ],
-                                ],
-                                [],
-                                1,
-                                ['COUNT(*)']
-                            )[0]['COUNT(*)'] ?? 0;
-
-                            ?>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        style="transform: translate(-50%, 70%)!important">
-                            <?php echo $countOverdue; ?>
-                        <span class="visually-hidden">unread messages</span>
-                        <?php endif; ?>
+<!--                        --><?php //if($controller->auth->user()->fullCRM()):
+//                            $countOverdue = $controller->database->superSelect('applications', [
+//                                    'cancelled' => 0,
+//                                    'application_section_journal' => [1,2],
+//                                    'dateField' => [
+//                                        'name' => 'date',
+//                                        'start' => '2025-01-01',
+//                                        'end' => date('Y-m-d',strtotime('-40 days'))
+//                                    ],
+//                                ],
+//                                [],
+//                                1,
+//                                ['COUNT(*)']
+//                            )[0]['COUNT(*)'] ?? 0;
+//
+//                            ?>
+<!--                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"-->
+<!--                        style="transform: translate(-50%, 70%)!important">-->
+<!--                            --><?php //echo $countOverdue; ?>
+<!--                        <span class="visually-hidden">unread messages</span>-->
+<!--                        --><?php //endif; ?>
                     </a>
                 </div>
                 <div class="app-header-menu-item">
@@ -76,13 +76,13 @@
                                      </a>
                                 </div>
                             </li>
-                            <li class="mb-2">
-                                <div class="app-header-menu-item">
-                                    <a href="/journal/control-payment" class="<?php if($activeHeaderItem == 12) echo 'active'; ?>">
-                                        Контроль выписки
-                                    </a>
-                                </div>
-                            </li>
+<!--                            <li class="mb-2">-->
+<!--                                <div class="app-header-menu-item">-->
+<!--                                    <a href="/journal/control-payment" class="--><?php //if($activeHeaderItem == 12) echo 'active'; ?><!--">-->
+<!--                                        Контроль выписки-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </li>-->
                             <li class="mb-2">
                                 <div class="app-header-menu-item">
                                     <a href="/journal/manager" class="<?php if($activeHeaderItem == 6) echo 'active'; ?>">
@@ -99,17 +99,30 @@
                             </li> -->
                             <!-- <li class="mb-2">
                                 <div class="app-header-menu-item">
-                                    <a href="/register-payment" class="<?php if($activeHeaderItem == 14) echo 'active'; ?>">Реестр на оплату</a>
+                                    <a href="/register-payment" class="<?php if($activeHeaderItem == 14) echo 'active'; ?>">
+                                    Реестр на оплату
+                                    </a>
                                 </div>
                             </li> -->
                             <li class="mb-2">
                                 <div class="app-header-menu-item">
-                                    <a href="/register-application-payment" class="<?php if($activeHeaderItem == 15) echo 'active'; ?>">Реестр оплаты заявок</a>
+                                    <a href="/register-application-payment" class="<?php if($activeHeaderItem == 15) echo 'active'; ?>">
+                                        Реестр оплаты заявок
+                                    </a>
                                 </div>
                             </li>
                             <li class="mb-2">
                                 <div class="app-header-menu-item">
-                                    <a href="/register-additional-expenses" class="<?php if($activeHeaderItem == 16) echo 'active'; ?>">Реестр доп. затрат</a>
+                                    <a href="/register-additional-expenses" class="<?php if($activeHeaderItem == 16) echo 'active'; ?>">
+                                        Реестр доп. затрат
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="mb-2">
+                                <div class="app-header-menu-item">
+                                    <a href="/register-application-consideration" class="<?php if($activeHeaderItem == 17) echo 'active'; ?>">
+                                        Реестр заявок на проверке
+                                    </a>
                                 </div>
                             </li>
                             <!-- <li class="mb-2">

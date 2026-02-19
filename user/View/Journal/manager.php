@@ -15,7 +15,7 @@
 
 $controller->view('Components/head');
 
-//dd($listTSApplication);
+//dd($listApplication);
 ?>
 
 <body>
