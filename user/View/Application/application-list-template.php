@@ -119,7 +119,7 @@
                                 </svg>
                             <?php endif; ?>
                         </div>
-
+                        <?php if($item['application_status'] !== 'На проверке' OR $controller->auth->user()->fullCRM()): ?>
                         <div class="settings">
                             <div class="dropdown">
                                 <div class="dropdown-toggle dropdown-toggle-without-arrow" data-bs-toggle="dropdown" aria-expanded="false">
@@ -146,7 +146,7 @@
                                         </div>
                                     </li>
 
-                                    <li>
+                                    <li class="d-none">
                                         <div class="dropdown-item js-create-prr  bg-warning text-dark mb-2" data-id-app="<?php echo $item['id']; ?>">
                                             <i class="bi bi-plus-circle"></i> Создать ПРР
                                         </div>
@@ -160,6 +160,27 @@
                                 </ul>
                             </div>
                         </div>
+                        <?php else: ?>
+                            <div class="settings">
+                                <div class="dropdown">
+                                    <div class="dropdown-toggle dropdown-toggle-without-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.3" d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" fill="#B5B5C3"></path>
+                                            <path d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z" fill="#B5B5C3"></path>
+                                            <path d="M13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17C12.5523 17 13 16.5523 13 16Z" fill="#B5B5C3"></path>
+                                            <path d="M13 8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8C11 8.55228 11.4477 9 12 9C12.5523 9 13 8.55228 13 8Z" fill="#B5B5C3"></path>
+                                        </svg>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-theme" style="padding: 0; border: unset">
+                                        <li>
+                                            <div class="dropdown-item bg-danger text-white mb-2">
+                                                Данная заявка находится на проверке
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </a>
             </div>

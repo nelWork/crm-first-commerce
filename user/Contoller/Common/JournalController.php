@@ -381,19 +381,19 @@ class JournalController extends Controller
 
             $item['application_data']['TYPE_APPLICATION'] = 1;
 
-            $item['application_data']['customer_Client'] = 'ООО Либеро Логистика';
-            $item['application_data']['customer_Carrier'] = 'ООО Либеро Логистика';
+            $item['application_data']['customer_Client'] = 'ООО Логистика';
+            $item['application_data']['customer_Carrier'] = 'ООО Логистика';
 
             switch ($item['application_data']['customer_id_Client']) {
                 case 4:
-                    $item['application_data']['customer_Client'] = 'ООО Библеон';
+                    $item['application_data']['customer_Client'] = '';
                     break;
             }
 
 
             switch ($item['application_data']['customer_id_Carrier']) {
                 case 4:
-                    $item['application_data']['customer_Carrier'] = 'ООО Библеон';
+                    $item['application_data']['customer_Carrier'] = '';
                     break;
             }
 
@@ -441,19 +441,19 @@ class JournalController extends Controller
 
             $item['application_data']['TYPE_APPLICATION'] = 2;
 
-            $item['application_data']['customer_Client'] = 'ООО Либеро Логистика';
-            $item['application_data']['customer_Carrier'] = 'ООО Либеро Логистика';
+            $item['application_data']['customer_Client'] = 'ООО  Логистика';
+            $item['application_data']['customer_Carrier'] = 'ООО  Логистика';
 
             switch ($item['application_data']['customer_id_Client']) {
                 case 4:
-                    $item['application_data']['customer_Client'] = 'ООО Библеон';
+                    $item['application_data']['customer_Client'] = 'ООО ';
                     break;
             }
 
 
             switch ($item['application_data']['customer_id_Prr']) {
                 case 4:
-                    $item['application_data']['customer_Carrier'] = 'ООО Библеон';
+                    $item['application_data']['customer_Carrier'] = 'ООО ';
                     break;
             }
 
@@ -529,11 +529,11 @@ class JournalController extends Controller
 
             $item['application_data']['TYPE_APPLICATION'] = 3;
 
-            $item['application_data']['customer_Carrier'] = 'ООО Либеро Логистика';
+            $item['application_data']['customer_Carrier'] = 'ООО  Логистика';
 
             switch ($item['application_data']['customer_id_Carrier']) {
                 case 4:
-                    $item['application_data']['customer_Carrier'] = 'ООО Библеон';
+                    $item['application_data']['customer_Carrier'] = 'ООО ';
                     break;
             }
 
@@ -625,6 +625,8 @@ class JournalController extends Controller
         $eventsPrr = $this->database->select('prr_manager_journal_event');
         $eventsTs = $this->database->select('ts_manager_journal_event');
 
+        
+
         $this->extract([
             'controller' => $this,
             'titlePage' => 'Бухг. журнал',
@@ -640,7 +642,8 @@ class JournalController extends Controller
             'activeHeaderItem' => 5,
             'accessChangePayment' => $accessChangePayment,
             'eventsPrr' => $eventsPrr,
-            'eventsTs' => $eventsTs
+            'eventsTs' => $eventsTs,
+            'customers' => $this->database->select('customers')
         ]);
 
         $this->view('Journal/index');
@@ -1260,14 +1263,11 @@ class JournalController extends Controller
                     break;
             }
 
-            $application['id_customer_name'] = '(ООО Либеро Логистика)';
+            $application['id_customer_name'] = '(ООО Логистика)';
 
             switch ($application['id_customer']){
                 case 2:
-                    $application['id_customer_name'] = '(ИП Беспутин Семён Валерьевич)';
-                    break;
-                case 3:
-                    $application['id_customer_name'] = '(ИП Часовников Александр Вадимович)';
+                    $application['id_customer_name'] = '(ИП Иванов Иван Иванович)';
                     break;
             }
 
@@ -2049,7 +2049,8 @@ class JournalController extends Controller
             'isClosedJournal' => $isClosedJournal,
             'selectedUser' => $selectedUser,
             'link' => $this->request->requestUri(),
-            'year' => $year
+            'year' => $year,
+            'customers' => $this->database->select('customers')
         ]);
 
         $this->view('Journal/manager');
@@ -2177,7 +2178,8 @@ class JournalController extends Controller
             'isClosedJournal' => $isClosedJournal,
             'selectedUser' => $selectedUser,
             'link' => $this->request->requestUri(),
-            'year' => $year
+            'year' => $year,
+            'customers' => $this->database->select('customers')
         ]);
 
         $this->view('Journal/manager');

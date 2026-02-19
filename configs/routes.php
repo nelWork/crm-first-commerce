@@ -37,6 +37,7 @@ use App\User\Middleware\FullCRMMiddleware;
 
 return [
     Route::get('/', [ApplicationController::class, 'applicationsListPage'], [AuthMiddleware::class]),
+    Route::get('/test/tg', [ApplicationController::class, 'TestTG'], [AuthMiddleware::class]),
     Route::get('/map', [HomeController::class, 'map'], [FullCRMMiddleware::class]),
 
     Route::post('/api/main-site/upload-form', [HomeController::class, 'apiMainSiteUploadForm']),

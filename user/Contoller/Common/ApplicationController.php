@@ -45,6 +45,12 @@ use App\Model\User\User;
 
 class ApplicationController extends Controller
 {
+    public function TestTG(){
+        // echo 1;
+        $application = new Application(['id' => 54]);
+
+        $application->sendTelegramConfirm();
+    }
 
 
     public function ajaxChangeDateReceiptAllDocuments()

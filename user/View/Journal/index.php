@@ -50,6 +50,9 @@ $controller->view('Components/head');
         text-decoration: none;
         color: black;
     }
+    .btn-fillter-all.bg-danger{
+        border: 0;
+    }
     .table-setting-container .form-check{
         margin-bottom: 0.25rem;
     }
@@ -266,14 +269,10 @@ $controller->view('Components/head');
     }
 </style>
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-5"><?php echo $titlePage; ?><br>
-        <a class="btn btn-warning" href="/journal-list?no-profit=1">
-            Журнал без прибыли
-        </a>
-    </h1>
+    <h1 class="text-center mb-5"><?php echo $titlePage; ?></h1>
 
-    <?php //$controller->view('Journal/list-customers'); ?>
-    <?php //$controller->view('Journal/list-section'); ?>
+    <?php $controller->view('Journal/list-customers'); ?>
+    <?php $controller->view('Journal/list-section'); ?>
 
     
     <ul class="nav nav-pills justify-content-center w-100 mt-4 mb-5 d-none">
@@ -304,14 +303,17 @@ $controller->view('Components/head');
             <input type="date" name="date-start" id="fillter-date-start" value="<?php echo $condition['dateField']['start']; ?>">
             <label for="" class="label-fillter-date">—</label>
             <input type="date" name="date-end" id="fillter-date-end" value="<?php echo $condition['dateField']['end']; ?>">
-            <button class="btn-fillter-date" type="button" data-bs-toggle="modal" data-bs-target="#modalFillterDate">...</button>
-            <button class="btn-fillter-all" id="btn-fillter-all"  type="button">Фильтры</button>
-            <button class="btn-setting-table" data-bs-toggle="modal" data-bs-target="#modalSettingTable" type="button">Настройки таблицы</button>
-            <button class="btn-fillter-submit" id="btn-fillter-submit">Применить</button>
-            <a href="/journal" class="btn-fillter-submit">Сбросить фильтры</a>
-            <button class="btn-fillter-submit" id="journal-excel" type="button">Выгрузить в EXCEL</button>
+            <button class="btn btn-fillter-date" type="button" data-bs-toggle="modal" data-bs-target="#modalFillterDate">...</button>
+            <button class="btn btn-fillter-all" id="btn-fillter-all"  type="button">Фильтры</button>
+            <button class="btn btn-setting-table" data-bs-toggle="modal" data-bs-target="#modalSettingTable" type="button">Настройки таблицы</button>
+            <button class="btn btn-fillter-submit" id="btn-fillter-submit">Применить</button>
+            <a href="/journal" class="btn btn-fillter-submit">Сбросить фильтры</a>
+            <button class="btn btn-fillter-submit" id="journal-excel" type="button">Выгрузить в EXCEL</button>
+            <a class="btn btn-fillter-submit bg-danger" href="/journal-list?no-profit=1">
+                Журнал без прибыли
+            </a>
 
-            <button class="btn-fillter-submit" id="create-register" type="button">Сформировать реестр</button>
+            <button class="btn-fillter-submit d-none" id="create-register" type="button">Сформировать реестр</button>
         </div>
 
         <div class="fillter-all-container d-none" data-status="0">

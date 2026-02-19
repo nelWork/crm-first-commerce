@@ -279,7 +279,7 @@ $controller->view('Components/head');
                 <th class="table-col-6">Стоимость перевозки<br>(Клиент)</th>
                 <th class="table-col-8">Перевозчик / контакты</th>
                 <th class="table-col-9">Стоимость перевозки<br>(Перевозчик)</th>
-                <th class="table-col-11">Решение</th>
+                <th class="table-col-11"></th>
             </tr>
             </thead>
             <tbody id="tbody-application">
@@ -374,7 +374,7 @@ $controller->view('Components/head');
                     <td class="table-col table-col-11">
                         <!-- Решение  -->
                         <div>
-                            <button class="btn btn-primary" id="consideration" data-id="<?php echo $application['id']; ?>">Принято</button>
+                            <button class="btn btn-primary js-consideration" id="" data-id="<?php echo $application['id']; ?>">Подтвердить</button>
                         </div>
                     </td>
                 </tr>
@@ -386,7 +386,7 @@ $controller->view('Components/head');
 
 <script>
 
-    $('#consideration').click(function () {
+    $('.js-consideration').click(function () {
 
         let id = $(this).data('id');
         console.log (id);
@@ -398,7 +398,7 @@ $controller->view('Components/head');
             success: function (response) {
                 console.log(response);
                 let data = JSON.parse(response);
-
+                location.reload();
             }
         })
     });

@@ -1,7 +1,7 @@
 <?php
 return [
-    'server' => "localhost",
-    'database' => "pegas_new_clear",
-    'username' => "root",
-    'password' => ""
+    'server' => "db",
+    'database' => "pegas",
+    'username' => "testuser",
+    'password' => "testpass"
 ];

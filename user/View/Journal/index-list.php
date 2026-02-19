@@ -241,7 +241,13 @@ $controller->view('Components/head');
 
 </style>
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-4"><?php echo $titlePage; ?></h1>
+    <h1 class="text-center mb-4">
+        <?php if($noProfit): ?>
+            Журнал без прибыли
+        <?php else: ?>
+            <?php echo $titlePage; ?>
+        <?php endif; ?>
+    </h1>
     
     <h2 class="text-center mb-4"><?php echo $nameFile; ?></h2>
 
@@ -251,18 +257,21 @@ $controller->view('Components/head');
             <input type="date" name="date-start" id="fillter-date-start" value="<?php echo $condition['dateField']['start']; ?>">
             <label for="" class="label-fillter-date">—</label>
             <input type="date" name="date-end" id="fillter-date-end" value="<?php echo $condition['dateField']['end']; ?>">
-            <button class="btn-fillter-date" type="button" data-bs-toggle="modal" data-bs-target="#modalFillterDate">...</button>
-            <button class="btn-fillter-all" id="btn-fillter-all"  type="button">Фильтры</button>
-            <button class="btn-setting-table" data-bs-toggle="modal" data-bs-target="#modalSettingTable" type="button">Настройки таблицы</button>
-            <button class="btn-fillter-submit" id="btn-fillter-submit">Применить</button>
-            <a href="/journal" class="btn-fillter-submit">Сбросить фильтры</a>
-            <button class="btn-fillter-submit" id="journal-excel" type="button">Выгрузить в EXCEL</button>
+            <button class="btn btn-fillter-date" type="button" data-bs-toggle="modal" data-bs-target="#modalFillterDate">...</button>
+            <button class="btn btn-fillter-all" id="btn-fillter-all"  type="button">Фильтры</button>
+            <button class="btn btn-setting-table" data-bs-toggle="modal" data-bs-target="#modalSettingTable" type="button">Настройки таблицы</button>
+            <button class="btn btn-fillter-submit" id="btn-fillter-submit">Применить</button>
+            <a href="/journal" class="btn btn-fillter-submit">Сбросить фильтры</a>
+            <button class="btn btn-fillter-submit" id="journal-excel" type="button">Выгрузить в EXCEL</button>
             <?php if($noProfit): ?>
-                <button class="btn-fillter-submit" id="journal-excel-stat" type="button">Скачать ОТЧЕТ</button>
+                <button class="btn btn-fillter-submit" id="journal-excel-stat" type="button">Скачать ОТЧЕТ</button>
+                <a class="btn btn-fillter-submit bg-primary text-white"  href="/journal">Бухг. журнал</a>
                 
             <?php endif; ?>
 
-            <button class="btn-fillter-submit" id="create-register" type="button">Сформировать реестр</button>
+            
+
+            <button class="btn-fillter-submit d-none" id="create-register" type="button">Сформировать реестр</button>
         </div>
 
 <!--        no-profit input-->
@@ -878,13 +887,10 @@ $controller->view('Components/head');
                         <?php
                         switch ($application['id_customer']):
                             case 1:
-                                echo '(ООО Либеро Логистика)';
+                                echo '(ООО Логистика)';
                                 break;
                             case 2:
-                                echo '(ИП Беспутин Семён Валерьевич)';
-                                break;
-                            case 3:
-                                echo '(ИП Часовников Александр Вадимович)';
+                                echo '(ИП Иванов Иван Иванович)';
                                 break;
                         endswitch;
                         ?>

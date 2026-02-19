@@ -960,11 +960,108 @@ class Application extends Model
                 if ($stmt) {
                     $this->id = $stmt;
                     $this->firstForClient();
+                    $this->sendTelegramConfirm();
                 }
                 return $stmt;
 
             }
         }
+    }
+
+    public function sendTelegramConfirm(){
+        $token = '7647329434:AAE67jhP-LYHFF-IBeOdJxil_FZhOs143tI';
+
+        $chatId = '-5261434102';
+
+        $managerData = $this->database->first('users', ['id' => $this->idUser]);
+
+        $managerFIO = $managerData['surname'] .' ' .$managerData['name'];
+
+        $clientData = $this->database->first('clients',['id' => $this->clientIdClient]);
+
+        $clientText = $clientData['name'] .' (<b><u>ИНН ' .$clientData['inn'] .'</u></b>)';
+
+        $carrierData = $this->database->first('carriers',['id' => $this->carrierIdCarrier]);
+        
+        $carrierText = $carrierData['name'] .' (<b><u>ИНН ' .$carrierData['inn'] .'</u></b>)';
+
+        $driverData = $this->database->first('drivers',['id' => $this->driverIdCarrier]);
+
+        $driverText = $driverData['name'] .' ' .$driverData['passport_serial_number'];
+
+        $cargoText = strip_tags($this->natureCargoCarrier) .', вес - ' .$this->weightCarrier .', мест - ' .$this->placeCarrier;
+
+        $routeText = '';
+        // dd($this->transportationList);
+
+        foreach($this->transportationList as $item){
+            $itemData = $item->get();
+
+            if($itemData['type_for'] == 0){
+                $routeText .= ' ' .$itemData['city'] .', ' .$itemData['address'] .' (' .$itemData['date'] .') - ';
+            }
+        }
+
+        trim($routeText,' - ');
+
+
+
+        $carText = $this->carBrandIdCarrier .' ' .$this->governmentNumberCarrier .' ' . $this->typeTransportIdCarrier;
+        $message = 'НОВАЯ ЗАЯВКА №' .$this->applicationNumber .'
+<b>Менеджер: </b>' .$managerFIO .'
+<b>Дата создания: </b>' . date('d.m.Y H:i:s', strtotime($this->date)) . '
+<b>Клиент: </b>' .$clientText . '
+<b>Стоимость для клиента - </b>' . number_format($this->transportationCostClient,2,',',' ') . ' руб. ' .$this->taxationTypeClient .'
+<b>Перевозчик: </b>' .$carrierText . '
+<b>Стоимость для перевозчика - </b>' . number_format($this->transportationCostCarrier,2,',',' ') . ' руб. ' . $this->taxationTypeCarrier .'
+<b>Водитель:</b> ' . $driverText .'
+<b>ТС:</b> ' .$carText .'
+<b>Груз:</b> ' .$cargoText .'
+<b>Маршрут:</b> ' .$routeText .'
+<a href="google.com">Ссылка на заявку</a>' 
+        ;
+
+        
+
+        $keyboard = json_encode([
+            'inline_keyboard' => [
+                [
+                    [
+                        'text' => '✅ Подтвердить заявку',
+                        'callback_data' => 'confirm_application:' .$this->id
+                    ]
+                ],
+                [
+                    [
+                        'text' => '❌ Отклонить заявку',
+                        'callback_data' => 'cancel_application:' .$this->id
+                    ]
+                ]
+            ]
+        ]);
+
+
+        $url = "https://api.telegram.org/bot$token/sendMessage";
+        $params = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML',
+            'reply_markup' => $keyboard
+
+        ];
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        //dd($response,$httpCode);
+        var_dump([$response,$httpCode]);
+        curl_close($ch);
+
     }
 
     private function getSetLastApplicationNumber(){
@@ -1006,6 +1103,7 @@ class Application extends Model
         $newApplication->edit(["attorney_number" => 0]);
         $newApplication->edit(["application_section_journal" => 0]);
         $newApplication->edit(["application_status_journal" => 'Е.Н.П']);
+        $newApplication->edit(["application_status" => 'На проверке']);
 
         $newApplication->edit([
             'account_number_Client' => '',

@@ -59,22 +59,25 @@ $controller->view('Components/head');
 
 <!--                                <li><div class="dropdown-item js-delete-fines">В архив</div></li>-->
 <!--                                <li><div class="dropdown-item js-delete-fines">Удалить</div></li>-->
+                                
+
+                                <li class="d-none"><div class="dropdown-item js-create-prr  bg-warning text-dark mb-2" data-id-app="<?php echo $application->id; ?>">
+                                        <i class="bi bi-plus-circle"></i> Создать ПРР
+                                    </div></li>
+                                <?php if($application->status['application-status'] !== 'На проверке' OR $controller->auth->user()->fullCRM()): ?>
                                 <li>
                                     <div class="dropdown-item js-copy-application bg-success text-white mb-2"
                                          data-id-app="<?php echo $application->id; ?>">
                                         <i class="bi bi-copy" style="margin-right: 6px;"></i> Копировать
                                     </div>
                                 </li>
-
-                                <li><div class="dropdown-item js-create-prr  bg-warning text-dark mb-2" data-id-app="<?php echo $application->id; ?>">
-                                        <i class="bi bi-plus-circle"></i> Создать ПРР
-                                    </div></li>
-                                <?php if($application->status['application-status'] !== 'На проверке' OR $controller->auth->user()->fullCRM()): ?>
                                 <li>
                                     <a href="/application/edit?id=<?php echo $application->id;?>"
                                        class="dropdown-item bg-primary text-white mb-2">
                                         <i class="bi bi-pencil-square" style="margin-right: 6px;"></i> Редактировать</a>
                                 </li>
+                                <?php else: ?>
+                                    <li class=""><div class="dropdown-item bg-danger text-dark">Данная заявка находится на проверке</div></li>
                                 <?php endif; ?>
                                 <?php if($controller->auth->user()->fullCRM() OR in_array($controller->auth->user()->id(),[17,31])): ?>
                                 <li>

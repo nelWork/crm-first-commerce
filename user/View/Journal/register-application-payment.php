@@ -745,15 +745,15 @@ $controller->view('Components/head');
                                             data-type-filter="id" type="checkbox" name="filter-header-table-3"
                                             value="1" id="flexCheckDefault-customer-id-carrier-1">
                                          <label class="form-check-label" for="flexCheckDefault-customer-id-carrier-1">
-                                            ООО «Либеро Логистика»
+                                            ООО «Логистика»
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input js-filter-header-table" data-name-col="customer-id-carrier"
                                             data-type-filter="id" type="checkbox" name="filter-header-table-3"
-                                            value="4" id="flexCheckDefault-customer-id-carrier-4">
+                                            value="2" id="flexCheckDefault-customer-id-carrier-4">
                                          <label class="form-check-label" for="flexCheckDefault-customer-id-carrier-4">
-                                            ООО Библеон
+                                            ИП Иванов Иван Иванович
                                         </label>
                                     </div>
                                 </div>
@@ -1260,13 +1260,10 @@ $controller->view('Components/head');
                                     <?php
                                     switch ($application['id_customer']):
                                         case 1:
-                                            echo '(ООО Либеро Логистика)';
+                                            echo '(ООО  Логистика)';
                                             break;
                                         case 2:
-                                            echo '(ИП Беспутин Семён Валерьевич)';
-                                            break;
-                                        case 3:
-                                            echo '(ИП Часовников Александр Вадимович)';
+                                            echo '(ИП Иванов Иван Иванович)';
                                             break;
                                     endswitch;
                                     ?>
@@ -1432,10 +1429,10 @@ $controller->view('Components/head');
                                 <?php 
                                     switch($application['customer_id_Carrier']):
                                         case 1:
-                                            echo 'ООО «Либеро Логистика»';
+                                            echo 'ООО « Логистика»';
                                             break;
-                                        case 4:
-                                            echo 'ООО Библеон';
+                                        case 2:
+                                            echo 'ИП Иванов Иван Иванович';
                                             break;
                                     endswitch;
                                 ?>

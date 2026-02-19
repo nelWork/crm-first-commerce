@@ -336,14 +336,14 @@ $controller->view('Components/head');
     }
 </style>
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-4"><?php echo $titlePage; ?> <br>
-        <a class="btn btn-warning" href="/journal/control-payment">
-            Контроль выписки
-        </a> <br>
-        <button class="btn btn-warning" id="btn-open-files" data-bs-toggle="modal" data-bs-target="#exampleModal">Открыть список загруженных файлов</button>
+    <h1 class="text-center mb-4"><?php echo $titlePage; ?>
+        <a class="text-primary h3" href="/journal/control-payment">
+            / Контроль выписки
+        </a>
+        
     </h1>
 
-    <ul class="nav nav-pills justify-content-center w-100 mb-5">
+    <ul class="nav nav-pills justify-content-center w-100 mb-4">
         <li class="nav-item">
             <a class="nav-link js-tab-task js-tab-customer active" aria-current="page" href="#" data-num-tab="1">
                 Дебет
@@ -360,6 +360,10 @@ $controller->view('Components/head');
             </a>
         </li>
     </ul>
+
+    <div class="mb-4 text-center">
+        <button class="btn btn-warning" id="btn-open-files" data-bs-toggle="modal" data-bs-target="#exampleModal">Открыть список загруженных файлов</button>
+    </div>
 
     <div id="tab-1" class="table-tab">
 
@@ -498,10 +502,10 @@ $controller->view('Components/head');
                                     <?php
                                     switch ($application['customer_id_Carrier']):
                                         case 1:
-                                            echo '(ООО Либеро Логистика)';
+                                            echo '(ООО Логистика)';
                                             break;
                                         case 4:
-                                            echo '(ООО Библеон)';
+                                            echo '(ООО )';
                                             break;
                                     endswitch;
                                     ?>
@@ -788,10 +792,10 @@ $controller->view('Components/head');
                                     <?php
                                     switch ($application['id_customer']):
                                         case 1:
-                                            echo '(ООО Либеро Логистика)';
+                                            echo '(ООО Логистика)';
                                             break;
                                         case 4:
-                                            echo '(ООО Библеон)';
+                                            echo '(ООО )';
                                             break;
                                     endswitch;
                                     ?>

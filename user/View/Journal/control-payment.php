@@ -52,12 +52,13 @@ $controller->view('Components/head');
 </style>
 
 <main class="journal container-fluid p-4">
-    <h1 class="text-center mb-5"><?php echo $titlePage; ?> <br>
-        <a class="btn btn-warning" href="/journal/parse-txt">
-            Журнал выписка
-        </a>
-    </h1>
 
+    <h1 class="text-center mb-5"><?php echo $titlePage; ?>
+            <a class="text-primary h3" href="/journal/parse-txt">
+                / Журнал выписка
+            </a>
+            
+    </h1>
 
     <ul class="nav nav-pills mb-5 justify-content-center w-100" id="tabMenu" role="tablist">
         <li class="nav-item" role="presentation">
@@ -69,13 +70,14 @@ $controller->view('Components/head');
     </ul>
 
     <form method="GET" class="mb-4 text-left">
+        <label for="" class="mb-2" style="font-weight: bold">Выберите дату:</label>
             <!-- Поле выбора даты -->
             <input
                     type="text"
                     name="period"
                     id="date-picker"
                     value="<?php echo $period; ?>"
-                    class=""
+                    class="form-control"
                     placeholder="Выберите период">
     </form>
 
@@ -189,17 +191,17 @@ $controller->view('Components/head');
                                            id="checkbox-customer-1">
                                     <label class="form-check-label"
                                            for="checkbox-customer-1">
-                                        ООО Либеро Логистика
+                                        ООО Логистика
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input js-filter-checkbox" type="checkbox" data-type="0"
                                            data-name-col="customer"
-                                           value="4"
+                                           value="2"
                                            id="checkbox-customer-1">
                                     <label class="form-check-label"
                                            for="checkbox-customer-1">
-                                        ООО Библеон
+                                        ИП Иванов Иван Иванович
                                     </label>
                                 </div>
                             
@@ -358,7 +360,7 @@ $controller->view('Components/head');
                                        id="checkbox-customer-carrier-1">
                                 <label class="form-check-label"
                                        for="checkbox-customer-carrier-1">
-                                    ООО Либеро Логистика
+                                    ООО Логистика
                                 </label>
                             </div>
                             <div class="form-check">
@@ -368,7 +370,7 @@ $controller->view('Components/head');
                                        id="checkbox-customer-carrier-4">
                                 <label class="form-check-label"
                                        for="checkbox-customer-carrier-4">
-                                    ООО Библеон
+                                    ИП Иванов Иван Иванович
                                 </label>
                             </div>
                             

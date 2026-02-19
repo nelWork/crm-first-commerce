@@ -1,4 +1,4 @@
 <?php
 return [
-    'url' => "http://crm-first-commerce/"
+    'url' => "http://localhost/"
 ];

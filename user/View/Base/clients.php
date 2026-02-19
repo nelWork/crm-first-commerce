@@ -48,7 +48,7 @@ $controller->view('Components/head');
                 <div class="col">
                     <div class="d-flex justify-content-end">
                         <?php if($controller->auth->user()->fullCRM()): ?>
-                        <button class="btn btn-success me-3" id="download-excel">
+                        <button class="btn btn-success me-3 d-none" id="download-excel">
                             Скачать в EXCEL
                         </button>
                         <?php endif; ?>
