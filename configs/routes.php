@@ -1,6 +1,7 @@
 <?php
 
 use App\Admin\Controller\Common\AdditionsController;
+use App\Admin\Controller\Common\CalculatorSettingsController;
 use App\Admin\Controller\Common\ConditionsController;
 use App\Admin\Controller\Common\CustomerController;
 use App\Admin\Controller\Common\DocumentFlowController;
@@ -79,8 +80,9 @@ return [
     Route::post('/admin/customer/delete', [CustomerController::class, 'customerDelete'], [AdminMiddleware::class]),
     Route::post('/admin/customer/add', [CustomerController::class, 'customerAdd'], [AdminMiddleware::class]),
     Route::post('/admin/customer/edit', [CustomerController::class, 'customerEdit'], [AdminMiddleware::class]),
-//
-//
+
+    Route::get('/admin/calculator/settings', [CalculatorSettingsController::class, 'calculatorSettings'], [AdminMiddleware::class]),
+    Route::post('/admin/calculator/settings', [CalculatorSettingsController::class, 'editCalculatorSettings'], [AdminMiddleware::class]),
 //
     Route::get('/admin/terms-of-payment/list', [TermsPaymentsController::class, 'termsPaymentListPage'], [AdminMiddleware::class]),
     Route::get('/admin/terms-of-payment/add', [TermsPaymentsController::class, 'termsPaymentAddPage'], [AdminMiddleware::class]),
