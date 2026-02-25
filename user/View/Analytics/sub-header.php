@@ -11,7 +11,7 @@
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item ">
         <a href="/analytics/debtor-creditor" class="nav-link <?= $controller->isActive('/analytics/debtor-creditor', true) ?>">
             Дебит, кредит
         </a>
@@ -35,7 +35,7 @@
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item d-none">
         <a href="/analytics/managers" class="nav-link <?= $controller->isActive('/analytics/managers', true) ?>">
             Менеджеры
         </a>

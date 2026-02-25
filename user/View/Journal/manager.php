@@ -450,7 +450,7 @@ $controller->view('Components/head');
             </tr>
         </thead>
         <tbody id="tbody-application">
-            <?php foreach ($listApplication as $application):  ?>
+            <?php foreach ($listApplication as $application): if($application['application_status'] == 'На проверке') continue;  ?>
         <?php $text = '<b>Л</b>';  if($application['application_section_journal'] == 2 AND
                 $application['application_status_journal'] == 'Выгрузился' AND isset($application['unfulfilledConditions'])){
                 foreach ($application['unfulfilledConditions'] as $item) {

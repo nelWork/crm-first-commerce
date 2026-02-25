@@ -1059,7 +1059,7 @@ class Application extends Model
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         //dd($response,$httpCode);
-        var_dump([$response,$httpCode]);
+        // var_dump([$response,$httpCode]);
         curl_close($ch);
 
     }

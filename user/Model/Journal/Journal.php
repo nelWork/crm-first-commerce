@@ -132,15 +132,12 @@ class Journal extends Model
             $application['carrier'] = $application['carrier_data']['name'] . ' (' . $application['carrier_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
-            $textCustomerCarrier = 'ООО Либеро Логистика';
+            $textCustomerClient = 'ООО  Логистика';
+            $textCustomerCarrier = 'ООО  Логистика';
 
             switch ($application['customer_id_Client']){
                 case 2:
-                    $textCustomerClient =  '(ИП Беспутин Семён Валерьевич)';
-                    break;
-                case 3:
-                    $textCustomerClient = '(ИП Часовников Александр Вадимович)';
+                    $textCustomerClient =  '(ИП Иванов Иван Иванович)';
                     break;
             }
 
@@ -723,16 +720,14 @@ foreach (range('A', 'Z') as $col) {
             $application['carrier'] = $application['carrier_data']['name'] . ' (' . $application['carrier_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
-            $textCustomerCarrier = 'ООО Либеро Логистика';
+            $textCustomerClient = 'ООО  Логистика';
+            $textCustomerCarrier = 'ООО  Логистика';
 
             switch ($application['customer_id_Client']){
                 case 2:
-                    $textCustomerClient =  '(ИП Беспутин Семён Валерьевич)';
+                    $textCustomerClient =  '(ИП Иванов Иван Иванович)';
                     break;
-                case 3:
-                    $textCustomerClient = '(ИП Часовников Александр Вадимович)';
-                    break;
+                
             }
 
 
@@ -928,12 +923,8 @@ foreach (range('A', 'Z') as $col) {
             $application['carrier'] = $application['carrier_data']['name'] . ' (' . $application['carrier_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
-            $textCustomerCarrier = 'ООО Либеро Логистика';
-
-            if($application['customer_id_Carrier'] == 4){
-                $textCustomerCarrier = 'ООО "БИБЛЕОН"';
-            }
+            $textCustomerClient = 'ООО  Логистика';
+            $textCustomerCarrier = 'ООО  Логистика';
 
 
             $textAdditionalExpenses = '';
@@ -1137,12 +1128,8 @@ foreach (range('A', 'Z') as $col) {
             $application['carrier'] = $application['carrier_data']['name'] . ' (' . $application['carrier_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
-            $textCustomerCarrier = 'ООО Либеро Логистика';
-
-            if($application['customer_id_Carrier'] == 4){
-                $textCustomerCarrier = 'ООО Библеон';
-            }
+            $textCustomerClient = 'ООО  Логистика';
+            $textCustomerCarrier = 'ООО Логистика';
 
 
             $textAdditionalExpenses = '';
@@ -1412,23 +1399,15 @@ foreach (range('A', 'Z') as $col) {
             $application['carrier'] = $application['carrier_data']['name'] . ' (' . $application['carrier_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
-            $textCustomerCarrier = 'ООО Либеро Логистика';
+            $textCustomerClient = 'ООО  Логистика';
+            $textCustomerCarrier = 'ООО  Логистика';
 
             switch ($application['customer_id_Client']){
                 case 2:
-                    $textCustomerClient =  '(ИП Беспутин Семён Валерьевич)';
+                    $textCustomerClient =  '(ИП Иванов Иван Иванович)';
                     break;
-                case 3:
-                    $textCustomerClient = '(ИП Часовников Александр Вадимович)';
-                    break;
+                
             }
-
-            if($application['customer_id_Carrier'] == 4){
-                $textCustomerCarrier = 'ООО Библеон';
-
-            }
-
 
             $textAdditionalExpenses = '';
 
@@ -1608,15 +1587,12 @@ foreach (range('A', 'Z') as $col) {
             $application['carrier'] = $application['prr_data']['name'] . ' (' . $application['prr_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
-            $textCustomerCarrier = 'ООО Либеро Логистика';
+            $textCustomerClient = 'ООО  Логистика';
+            $textCustomerCarrier = 'ООО  Логистика';
 
             switch ($application['customer_id_Client']){
                 case 2:
-                    $textCustomerClient =  '(ИП Беспутин Семён Валерьевич)';
-                    break;
-                case 3:
-                    $textCustomerClient = '(ИП Часовников Александр Вадимович)';
+                    $textCustomerClient =  '(ИП Иванов Иван Иванович)';
                     break;
             }
 
@@ -1784,15 +1760,13 @@ foreach (range('A', 'Z') as $col) {
             // $application['carrier'] = $application['carrier_data']['name'] . ' (' . $application['carrier_data']['inn'] .')';
 
 
-            $textCustomerClient = 'ООО Либеро Логистика';
+            $textCustomerClient = 'ООО  Логистика';
 
             switch ($application['id_customer']){
                 case 2:
-                    $textCustomerClient =  '(ИП Беспутин Семён Валерьевич)';
+                    $textCustomerClient =  '(ИП Иванов Иван Иванович)';
                     break;
-                case 3:
-                    $textCustomerClient = '(ИП Часовников Александр Вадимович)';
-                    break;
+                
             }
 
 

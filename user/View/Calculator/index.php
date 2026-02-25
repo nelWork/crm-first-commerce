@@ -53,6 +53,7 @@ $controller->view('Components/head');
                             </div>
                             <div class="col">
                                 <select name="" id="select-income-vat" class="form-select">
+                                    <option value="22">22%</option>
                                     <option value="20">20%</option>
                                     <option value="0">0%</option>
                                 </select>
@@ -67,6 +68,7 @@ $controller->view('Components/head');
                             </div>
                             <div class="col">
                                 <select name="" id="select-consumption-vat" class="form-select">
+                                    <option value="22">22%</option>
                                     <option value="20">20%</option>
                                     <option value="7">7%</option>
                                     <option value="5">5%</option>

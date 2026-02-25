@@ -170,6 +170,7 @@ class JournalController extends Controller
                 $prrApplicationList[$key]['in_register'] = 0;
             }
         }
+        // dd($listApplication);
 
         $listApplication = array_merge($this->transformPrrToNormalApplication($prrApplicationList),$listApplication);
 
@@ -233,6 +234,8 @@ class JournalController extends Controller
 
             $listApplication[$key]['list_comment'] = $listComment;
         }
+
+        // dd($listApplication);
 
         $this->extract([
             'controller' => $this,
@@ -919,7 +922,7 @@ class JournalController extends Controller
         $cost = false;
 
         $date = $this->request->input('date');
-//        var_dump([$id, $name, $info, $typeApp,$date]);
+    //    var_dump([$id, $name, $info, $typeApp, $date]);
 
         // Устанавливаем таблицу для основных данных, стоимости, истории и событий
         $table = 'applications';
@@ -996,6 +999,7 @@ class JournalController extends Controller
         // Обновляем данные в основной таблице (динамически выбранной)
 
         if ($this->database->update($table, [$name => $info], ['id' => $id])) {
+            
             if ($name === 'account_number_Client') {
                 $this->database->update($table, ['upd_number_Client' => $info], ['id' => $id]);
             }

@@ -1523,15 +1523,7 @@ $controller->view('Components/head');
                             <td class="table-col-100 col-client" data-cost="<?php echo $application['balance_payment_Carrier']; ?>">
                                 <?php echo $application['terms_payment_Carrier']; ?>
                             </td>
-                            <td class="table-col-31-1">
-                                <?php if($application['type-application'] != 'prr'): ?>
-                                <?php  foreach ($application['list_comment'] as $comment): ?>
-                                    <div class="">
-                                        - <?php echo $comment['comment']; ?> (<?php echo $comment['user'] .' ' .$comment['datetime']; ?>)
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
-                            </td>
+                            
                             <td class="table-col-100 col-client" data-cost="<?php echo $application['balance_payment_Carrier']; ?>">
                                 <?php if($application['id'] == 485) $application['date_payment_Carrier'] = '2025-12-30'; ?>
                                 <?php if ($application['date_payment_Carrier'] != '') echo date('d.m.Y', strtotime($application['date_payment_Carrier']));  ?>
@@ -1544,6 +1536,15 @@ $controller->view('Components/head');
                             <td class="table-col-100 col-client" data-cost="<?php echo $application['last_register_payment_comment']; ?>">
                                 <textarea class="form-control comment-field pay-today comment-field-history"
                                               data-id="<?php echo $application['id']; ?>" data-type-application="<?php echo $application['type-application']; ?>"><?php echo $application['last_register_payment_comment']; ?></textarea>
+                            </td>
+                            <td class="table-col-31-1">
+                                <?php if($application['type-application'] != 'prr'): ?>
+                                <?php  foreach ($application['list_comment'] as $comment): ?>
+                                    <div class="">
+                                        - <?php echo $comment['comment']; ?> (<?php echo $comment['user'] .' ' .$comment['datetime']; ?>)
+                                    </div>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </td>
                             <td class="table-col-23" data-cost="<?php echo $application['additional_expenses_sum_Carrier']; ?>">
                                 <!-- Доп. расходы -->

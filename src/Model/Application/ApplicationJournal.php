@@ -114,6 +114,8 @@ class ApplicationJournal extends Model
     private string $datePaymentClient = '';
     private string $datePaymentCarrier = '';
 
+    private string $applicationStatus = '';
+
     private $dateReceiptAllDocumentsCarrier;
 
     public array $fields = [
@@ -179,7 +181,8 @@ class ApplicationJournal extends Model
         'termsPaymentClient',
         'datePaymentClient',
         'datePaymentCarrier',
-        'dateReceiptAllDocumentsCarrier'
+        'dateReceiptAllDocumentsCarrier',
+        'applicationStatus'
     ];
 
     public array $fieldsSQL = [
@@ -225,7 +228,8 @@ class ApplicationJournal extends Model
         'share_for_sales',
         'terms_payment_Carrier',
         'terms_payment_Client',
-        'date_receipt_all_documents_Carrier'
+        'date_receipt_all_documents_Carrier',
+        'application_status'
     ];
 
     public function __construct($db, $isManager = true , array $data = [], $eventsTable = 'manager_journal_event')

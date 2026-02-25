@@ -1099,10 +1099,10 @@ $controller->view('Components/head');
                             <?php
                             switch ($application['customer_id_Client']):
                                 case 1:
-                                    echo '(ООО Либеро Логистика)';
+                                    echo '(ООО  Логистика)';
                                     break;
                                 case 4:
-                                    echo '(ООО Библеон)';
+                                    echo '(ИП Иванов)';
                                     break;
                             endswitch;
                             ?>

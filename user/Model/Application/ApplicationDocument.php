@@ -872,7 +872,7 @@ class ApplicationDocument extends Model
                         
                     </tr>
                     <tr>
-                    <td style="font-size: 11px; width: auto;line-height: 15px;"><span style="font-weight:bold;font-family: ' . $fontnameBold . ', serif;">БУХГАЛТЕРИЯ:</span> +7 (922) 028-37-22, buh@pegas.best</td>
+                    <td style="font-size: 11px; width: auto;line-height: 15px;"><span style="font-weight:bold;font-family: ' . $fontnameBold . ', serif;">БУХГАЛТЕРИЯ:</span> +7 (922) 028-37-22, buh@test.best</td>
                     </tr>
                 </tbody>
             </table>
@@ -1163,7 +1163,7 @@ class ApplicationDocument extends Model
             if ($dataCustomer['id'] == 1) {
                 $text = 'Настоящей доверенностью ' . $dataCustomer['name'] . ', ИНН ' . $dataCustomer['inn']
                     . ', юридический адрес: ' . $dataCustomer['legal_address']
-                    . ', в лице директора Часовникова Александра Вадимовича, действующего на основании Устава, доверяет водителю – экспедитору';
+                    . ', в лице директора Иванова Ивана Ивановича, действующего на основании Устава, доверяет водителю – экспедитору';
             } else
                 $text = 'Настоящей доверенностью ' . $dataCustomer['name']
                     . ', ИНН ' . $dataCustomer['inn'] . ', юридический адрес: ' . $dataCustomer['legal_address']
@@ -1243,7 +1243,7 @@ class ApplicationDocument extends Model
 //                return false;
         }
         else{
-            $isplonitel = "ИП Часовников Александр  Вадимович";
+            $isplonitel = "ИП Иванов Иван Иванович";
             $dataDriver = $this->getDriverData($application['driver_id_Carrier']);
 
             $dataCustomer = $this->getCustomerData($application['customer_id_Carrier']);
@@ -1278,7 +1278,7 @@ class ApplicationDocument extends Model
                         <tr style="height: 12px">
                             <td style="width: 45%;line-height: 12px;"></td>
                             <td style="text-align: right; font-size: 10px;line-height: 12px;">
-                                ИП Часовников Александр Вадимович
+                                ИП Иванов Иван Иванович
                             </td>
                         </tr>
                         <tr style="height: 12px">
@@ -1347,8 +1347,8 @@ class ApplicationDocument extends Model
                 .' две тысячи ' .$this->years[date('y', strtotime($dataApp))] .' года </i> </p>';
             $pdf->writeHTMLCell(0, 0, '25', '65', $title, 0, 1, 0, true, '', false);
 
-            $html = '<p>Настоящей доверенностью Индивидуальный предприниматель Часовников Александр Вадимович в лице 
-                Часовникова Александра Вадимовича, действующий на основании Уведомления о постановке на учет физического лица в налоговом органе
+            $html = '<p>Настоящей доверенностью Индивидуальный предприниматель Иванов Иван Иванович в лице 
+                Иванова Ивана Ивановича, действующий на основании Уведомления о постановке на учет физического лица в налоговом органе
                  № 626181993 от 12.11.2021 г., выданного ИФНС России по Верх-Исетскому району г. Екатеринбурга, уполномочивает</p>
                 <div>водителя-экспедитора ' .$dataDriver['name'] .', паспортные данные: ' .$dataDriver['passport_serial_number']
                 .', выдан ' .$dataDriver['issued_by'] .', дата выдачи: ' .$dataDriver['issued_date'] .', код подразделения ' . $dataDriver['department_code'] .'</div>
@@ -1504,12 +1504,12 @@ class ApplicationDocument extends Model
         if($dataCustomer['id'] == 1) {
             $text = 'Настоящей доверенностью ' . $dataCustomer['name'] . ', ИНН ' . $dataCustomer['inn']
                 . ', юридический адрес: ' . $dataCustomer['legal_address']
-                . ', в лице директора Часовникова Александра Вадимовича, действующего на основании Устава, доверяет водителю – экспедитору';
+                . ', в лице директора Иванова Ивана Ивановича, действующего на основании Устава, доверяет водителю – экспедитору';
         }
 
         if($attorneyTFBI){
-            $text = 'Настоящей доверенностью Индивидуальный предприниматель Часовников Александр Вадимович в лице '
-            .'Часовникова Александра Вадимовича, действующий на основании Уведомления о постановке на учет физического лица в'
+            $text = 'Настоящей доверенностью Индивидуальный предприниматель Иванов Иван Иванович в лице '
+            .'Иванова Ивана Ивановича, действующий на основании Уведомления о постановке на учет физического лица в'
             .'налоговом органе № 626181993 от 12.11.2021 г., выданного ИФНС России по Верх-Исетскому району г. Екатеринбурга, уполномочивает ';
 
         }

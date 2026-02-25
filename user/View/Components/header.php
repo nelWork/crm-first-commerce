@@ -39,7 +39,7 @@
                     <a href="/calculator" class="<?php if($activeHeaderItem == 13) echo 'active'; ?>">Калькулятор</a>
                 </div>
                 <div class="app-header-menu-item">
-                    <a href="/analytics" class="<?php if($activeHeaderItem == 2) echo 'active'; ?>">Аналитика</a>
+                    <a href="/analytics/declaration" class="<?php if($activeHeaderItem == 2) echo 'active'; ?>">Аналитика</a>
                 </div>
 
                 <?php if($controller->auth->user()->fullCRM() ): ?>
