@@ -5,7 +5,7 @@
             <a href="#" class="link <?php if($itemActiveMenu == 1) echo 'active'; ?>"><i class="fa-regular fa-hard-drive"></i> Хранилище</a>
         </li>
         <li class="admin-sidebar__item">
-            <a href="#" class="link <?php if($itemActiveMenu == 2) echo 'active'; ?>"><i class="fa-solid fa-sack-dollar"></i> Финансы</a>
+            <a href="/admin/calculator/settings" class="link <?php if($itemActiveMenu == 2) echo 'active'; ?>"><i class="fa-solid fa-sack-dollar"></i> Настройка калькулятора</a>
         </li>
         <li class="admin-sidebar__item">
             <a href="/admin/customer/list" class="link <?php if($itemActiveMenu == 3) echo 'active'; ?>">Юридические лица</a>

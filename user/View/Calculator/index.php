@@ -2,6 +2,9 @@
 /** @var App\User\Contoller\Common\HomeController $controller */
 /** @var String $titlePage */
 /** @var array $report */
+/** @var array $calculatorCoefficients */
+//dd($calculatorCoefficients);
+
 $controller->view('Components/head');
 ?>
 <body>
@@ -161,6 +164,13 @@ $controller->view('Components/head');
 
 </main>
 <script>
+
+    let coefficientsIncomeVat = <?php echo json_encode($calculatorCoefficients['coefficient_income_vat']) ?>;
+    let coefficientsConsumptionVat = <?php echo json_encode($calculatorCoefficients['coefficient_consumption_vat']) ?>;
+    let coefficientsConsumptionNotVat = <?php echo json_encode($calculatorCoefficients['coefficient_consumption_not_vat']) ?>;
+    let coefficientsConsumptionCash = <?php echo json_encode($calculatorCoefficients['coefficient_consumption_cash']) ?>;
+    let coefficientsSalary = <?php echo json_encode($calculatorCoefficients['coefficient_salary']) ?>;
+
     $('#input-income-vat,#input-consumption-vat,#input-consumption-not-vat,#input-consumption-cash,#select-consumption-vat,#select-income-vat').change(function (){
         calculateWalrus();
     });

@@ -44,6 +44,7 @@ class CalculatorController extends Controller
             'titlePage' => 'Калькулятор',
             'comments' => [],
             'activeHeaderItem' => 13,
+            'calculatorCoefficients' => $this->database->first('company_calculator_settings'),
         ]);
 
         $this->view("Calculator/index");
